@@ -3,6 +3,7 @@ package com.example.shoppingcart
 class Product(private val productID: Int,
               private var productName: String,
               private var productPrice:Int,
+              private var productDescription: String,
               private var categoryID: Int,
               var productQuantity: Int = 0) {
     fun getProductID(): Int {
