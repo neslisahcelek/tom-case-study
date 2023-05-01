@@ -1,7 +1,7 @@
 package com.example.shoppingcart
 
-class Coupon(private val couponID: Int,
-             private var discountType: String,
-             private var value:Int ) {
-
-}
+data class Coupon(
+    val couponID: Int,
+    var discountType: String,
+    var value: Int
+)

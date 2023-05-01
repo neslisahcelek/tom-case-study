@@ -4,15 +4,14 @@
 
     <item
         android:id="@+id/couponsFragment"
-        android:enabled="true"
-        android:icon="@android:drawable/btn_dialog"
+        android:icon="@drawable/outline_coupons"
         android:title="@string/menu_coupons"
         android:visible="true" />
     <item
         android:id="@+id/itemListFragment"
-        android:icon="@drawable/shopping_cart_48px"
-        android:title="@string/menu_home"
-        android:visible="true"/>
+        android:icon="@drawable/outline_home_black_48"
+        android:title="@string/products"
+        android:visible="true" />
     <item
         android:id="@+id/cartFragment"
         android:icon="@drawable/shopping_cart_48px"

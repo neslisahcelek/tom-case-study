@@ -1,22 +1,14 @@
 package com.example.shoppingcart
 
-class Product(private val productID: Int,
-              private var productName: String,
-              private var productPrice:Int,
-              private var productDescription: String,
-              private var categoryID: Int,
-              var productQuantity: Int = 0) {
-    fun getProductID(): Int {
-        return productID
-    }
-    fun getProductName(): String {
-        return productName
-    }
-    fun getProductPrice(): Int {
-        return productPrice
-    }
-    fun getCategoryID(): Int {
-        return categoryID
-    }
+data class Product(
+    val productID: Int,
+    var productName: String,
+    var productPrice: Int,
+    var productDescription: String,
+    var categoryID: Int,
+    var productQuantity: Int = 0
+)
 
-}
+
+
+
