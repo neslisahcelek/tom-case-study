@@ -23,7 +23,7 @@ class ItemListFragment : Fragment() {
 
 
 
-    val cart = Cart(1, arrayListOf(),0,0, Coupon(1,"",0))
+    val cart = Cart(1, arrayListOf(),0,0, Coupon(1,"",0,""))
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

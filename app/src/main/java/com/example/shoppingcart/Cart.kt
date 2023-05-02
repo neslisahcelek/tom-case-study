@@ -11,9 +11,4 @@ data class Cart (
 
 
 
-    fun getProducts(shoppingCart: Cart): ArrayList<Product> { //get products from shopping cart
-        return shoppingCart.products
-    }
-
-
 

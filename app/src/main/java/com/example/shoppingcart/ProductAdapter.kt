@@ -21,9 +21,9 @@ class ProductAdapter(private var products:ArrayList<Product>):RecyclerView.Adapt
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         holder.productImage.setImageResource(products[position].productImage)
         holder.productTitle.text = products[position].productName
-        holder.productPrice.text = products[position].productPrice.toString()
+        holder.productPrice.text = "₺" + products[position].productPrice.toString()
         holder.productButton.setOnClickListener {
-            addToCart(products[position], Cart(1, arrayListOf(),0,0, Coupon(1,"",0)))
+            addToCart(products[position], Cart(1, arrayListOf(),0,0, Coupon(1,"",0,"desc")))
         }
     }
     fun addToCart(product: Product, shoppingCart:Cart) { //add product to shopping cart

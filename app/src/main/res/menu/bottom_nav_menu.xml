@@ -9,6 +9,7 @@
         android:visible="true" />
     <item
         android:id="@+id/itemListFragment"
+        android:enabled="true"
         android:icon="@drawable/outline_home_black_48"
         android:title="@string/products"
         android:visible="true" />
