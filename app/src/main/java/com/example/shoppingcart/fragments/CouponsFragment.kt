@@ -1,15 +1,14 @@
 package com.example.shoppingcart.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingcart.Coupon
 import com.example.shoppingcart.CouponAdapter
-import com.example.shoppingcart.ProductAdapter
 import com.example.shoppingcart.R
 
 class CouponsFragment : Fragment() {
@@ -33,10 +32,11 @@ class CouponsFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_item_list, container, false)
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerViewItemList)
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = GridLayoutManager(this.context,2,
+        recyclerView.layoutManager = GridLayoutManager(this.context,1,
             GridLayoutManager.VERTICAL, false)
         val adapter = CouponAdapter(coupons)
         recyclerView.adapter = adapter
+
         return view
     }
 

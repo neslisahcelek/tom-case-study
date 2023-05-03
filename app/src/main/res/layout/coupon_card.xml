@@ -5,39 +5,55 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardElevation="3dp"
-    android:layout_marginTop="13dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    app:cardPreventCornerOverlap="true"
-    >
+    android:layout_marginTop="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="8dp"
+        android:padding="16dp">
 
-        >
         <TextView
             android:id="@+id/textViewCouponDescription"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginVertical="5dp"
-            android:gravity="center"
-            android:text="100 tl discount to all products blablablablablabla"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="100 TL Discount to All Products"
             android:textAlignment="center"
-            android:textColor="#000"
-            android:textSize="18sp"></TextView>
+            android:textColor="#212121"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewCouponDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get a discount of 100 TL on all products by using this coupon code at checkout: ABCDEFGHIJKLMNOP"
+            android:textColor="#757575"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/buttonApplyCoupon"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center|top"
-            android:layout_weight="1"
-            android:onClick="applyCoupon"
-            android:text="Add Coupon to cart" />
-    </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Add Coupon to Cart"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="#00C853"
+            android:padding="16dp"
+            android:gravity="center"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            android:transitionName="button_apply_coupon" />
 
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
