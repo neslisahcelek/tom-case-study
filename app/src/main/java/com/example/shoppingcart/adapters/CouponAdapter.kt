@@ -1,12 +1,14 @@
-package com.example.shoppingcart
+package com.example.shoppingcart.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.shoppingcart.Cart
+import com.example.shoppingcart.Coupon
+import com.example.shoppingcart.R
 
 class CouponAdapter(private var coupons:ArrayList<Coupon>): RecyclerView.Adapter<CouponAdapter.CouponViewHolder>(){
     override fun onCreateViewHolder(
@@ -24,7 +26,7 @@ class CouponAdapter(private var coupons:ArrayList<Coupon>): RecyclerView.Adapter
             addCouponToCart(coupons[position], Cart(1, arrayListOf(),0,0, Coupon(1,"",0,"des ")))
         }
     }
-    fun addCouponToCart(coupon:Coupon, shoppingCart:Cart) { //add product to shopping cart
+    fun addCouponToCart(coupon: Coupon, shoppingCart: Cart) { //add product to shopping cart
 
 
     }
