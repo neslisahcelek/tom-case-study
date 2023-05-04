@@ -21,21 +21,11 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/textViewCouponDescription"
+            android:id="@+id/textViewcouponDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="100 TL Discount to All Products"
             android:textAlignment="center"
-            android:textColor="#212121"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textViewCouponDetails"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Get a discount of 100 TL on all products by using this coupon code at checkout: ABCDEFGHIJKLMNOP"
+            android:hint="Get a discount of 100 TL on all products by using this coupon code at checkout: ABCDEFGHIJKLMNOP"
             android:textColor="#757575"
             android:textSize="16sp" />
 
@@ -44,15 +34,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:background="?attr/colorPrimary"
+            android:elevation="0dp"
+            android:gravity="center"
+
+            android:stateListAnimator="@null"
+            app:cornerRadius="18dp"
             android:text="Add Coupon to Cart"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:backgroundTint="#00C853"
-            android:padding="16dp"
-            android:gravity="center"
-            android:elevation="0dp"
-            android:stateListAnimator="@null"
             android:transitionName="button_apply_coupon" />
 
     </LinearLayout>

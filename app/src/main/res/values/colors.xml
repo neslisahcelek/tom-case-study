@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="androidstatusBarColor">#E1BEE7</color>
+    <!-- Uygulama rengi -->
+    <color name="purple_700">#6D229B</color>
+    <!-- Uygulama koyu rengi -->
+    <color name="colorPrimaryDark">#52208F</color>
+    <!-- Uygulama açık rengi -->
+    <color name="colorPrimaryVariant">#E1BEE7</color>
+    <!-- Uygulama ikincil rengi -->
+    <color name="colorSecondary">#A9A9A9</color>
+    <!-- Floating Action Button (FAB) rengi -->
+    <color name="colorAccent">#FF4081</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>

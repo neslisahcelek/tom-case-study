@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        window.statusBarColor = resources.getColor(R.color.white)
+
         replaceFragment(ItemListFragment())
 
         binding.buttomNavigationView.setOnItemSelectedListener { item ->

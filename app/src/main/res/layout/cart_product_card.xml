@@ -65,10 +65,7 @@
                 android:id="@+id/buttonDecrease"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="#FBFBFB"
-                android:backgroundTint="#000"
                 android:text="-"
-                android:textColor="#61286E"
                 android:textSize="15sp"
                 app:cornerRadius="10dp"
                 app:iconTint="#F3F3F3" />
@@ -77,23 +74,17 @@
                 android:id="@+id/textViewQuantity"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="#801E9C"
                 android:gravity="center|center_vertical"
                 android:hint="1"
-
-                android:textColor="#FFFF"
-                android:textColorHighlight="#9B5BA6"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/buttonIncrease"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="#FBFBFB"
                 android:text="+"
                 android:textAlignment="center"
-                android:textColor="#61286E"
-                android:textColorHint="#FFFFFF"
                 android:textSize="15sp"
                 app:cornerRadius="10dp"
                 app:iconTint="#F3F3F3" />

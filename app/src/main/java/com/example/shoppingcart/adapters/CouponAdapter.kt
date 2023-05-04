@@ -35,7 +35,7 @@ class CouponAdapter(private var coupons:ArrayList<Coupon>): RecyclerView.Adapter
     }
 
     class CouponViewHolder(view: View): RecyclerView.ViewHolder(view){
-        var couponDescription: TextView = view.findViewById(R.id.textViewCouponDescription)
+        var couponDescription: TextView = view.findViewById(R.id.textViewcouponDescription)
         var couponButton: Button = view.findViewById(R.id.buttonApplyCoupon)
     }
 }

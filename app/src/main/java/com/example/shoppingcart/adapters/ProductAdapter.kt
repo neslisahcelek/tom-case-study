@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingcart.Cart
 import com.example.shoppingcart.Coupon
 import com.example.shoppingcart.Product
+import com.example.shoppingcart.R
+import com.example.shoppingcart.fragments.ItemListFragment
 import com.example.shoppingcart.fragments.ProductDetailFragment
 
 
@@ -30,25 +32,25 @@ class ProductAdapter(private var products:ArrayList<Product>):RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        holder.productImage.setImageResource(products[position].productImage)
-        holder.productTitle.text = products[position].productName
-        holder.productPrice.text = "₺" + products[position].productPrice.toString()
+        var currentProduct = products[position]
+        holder.productImage.setImageResource(currentProduct.productImage)
+        holder.productTitle.text = currentProduct.productName
+        holder.productPrice.text = "₺" + currentProduct.productPrice.toString()
         holder.productButton.setOnClickListener {
             addToCart(products[position], Cart(1, arrayListOf(),0,0, Coupon(1,"",0,"desc")))
         }
         holder.cardView.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString("productTitle", products[position].productName)
-            bundle.putInt("productPrice", products[position].productPrice)
-            bundle.putString("productDescription", products[position].productDescription)
-            bundle.putInt("productImage", products[position].productImage)
+            bundle.putString("productTitle", currentProduct.productName)
+            bundle.putInt("productPrice", currentProduct.productPrice)
+            bundle.putString("productDescription", currentProduct.productDescription)
+            bundle.putInt("productImage", currentProduct.productImage)
             val productDetailFragment = ProductDetailFragment()
             productDetailFragment.arguments = bundle
-
-            it.setBackgroundColor(Color.TRANSPARENT);
-
-            val fragmentManager: FragmentManager = FragmentActivity().supportFragmentManager
-            fragmentManager.beginTransaction().replace(com.example.shoppingcart.R.id.cardViewProduct, ProductDetailFragment()).addToBackStack(null).commit()
+            val fragmentManager = ProductDetailFragment().activity?.supportFragmentManager
+            if (fragmentManager != null) {
+                fragmentManager.beginTransaction().replace(R.id.itemListFragment, productDetailFragment).commit()
+            }
         }
     }
     fun addToCart(product: Product, shoppingCart: Cart) { //add product to shopping cart

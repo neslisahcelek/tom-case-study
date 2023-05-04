@@ -20,7 +20,7 @@ class ProductDetailFragment: Fragment() {
     private var _binding: FragmentProductDetailBinding? = null
     private val binding get() = _binding!!
 
-    fun ProductDetailsFragment() {
+    fun ProductDetailFragment() {
 
     }
 
@@ -30,13 +30,11 @@ class ProductDetailFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentProductDetailBinding.inflate(inflater, container, false)
-        val view = binding.root
-       // var view = inflater.inflate(com.example.shoppingcart.R.layout.fragment_product_detail, container, false)
+        var view = inflater.inflate(com.example.shoppingcart.R.layout.fragment_product_detail, container, false)
         val productTitle = arguments?.getString("productTitle")
         val productImage = arguments?.getInt("productImage")
         val productPrice = arguments?.getString("productPrice")
         val productDescription = arguments?.getString("productDescription")
-        val productDetailImage = arguments?.getInt("productDetailImage")
 
         var productImageView = binding.imageViewDetail
         if (productImage != null) {

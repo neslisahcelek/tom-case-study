@@ -23,9 +23,10 @@ class CartProductAdapter (private var cartProducts:ArrayList<Product>): Recycler
     }
 
     override fun onBindViewHolder(holder: CartProductViewHolder, position: Int) {
-        holder.productImage.setImageResource(cartProducts[position].productImage)
-        holder.productTitle.text = cartProducts[position].productName
-        holder.productPrice.text = "₺" + cartProducts[position].productPrice.toString()
+        val currentItem = cartProducts[position]
+        holder.productImage.setImageResource(currentItem.productImage)
+        holder.productTitle.text = currentItem.productName
+        holder.productPrice.text = "₺" + currentItem.productPrice.toString()
         holder.decreaseButton.setOnClickListener {
 
         }
