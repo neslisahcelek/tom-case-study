@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,9 @@ class CartFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_cart, container, false)
+
+        val total:TextView = view.findViewById(R.id.textViewTotalPrice)
+        total.text = "Total Price: ₺50"
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerViewCart)
         recyclerView.setHasFixedSize(true)
