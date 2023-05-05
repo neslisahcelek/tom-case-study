@@ -47,9 +47,9 @@ class ProductAdapter(private var products:ArrayList<Product>):RecyclerView.Adapt
             bundle.putInt("productImage", currentProduct.productImage)
             val productDetailFragment = ProductDetailFragment()
             productDetailFragment.arguments = bundle
-            val fragmentManager = ProductDetailFragment().activity?.supportFragmentManager
+            val fragmentManager = (holder.itemView.context as FragmentActivity).supportFragmentManager
             if (fragmentManager != null) {
-                fragmentManager.beginTransaction().replace(R.id.itemListFragment, productDetailFragment).commit()
+                fragmentManager.beginTransaction().replace(R.id.frameLayout, productDetailFragment).addToBackStack(null).commit()
             }
         }
     }

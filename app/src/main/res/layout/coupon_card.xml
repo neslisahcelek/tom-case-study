@@ -37,7 +37,7 @@
             android:background="?attr/colorPrimary"
             android:elevation="0dp"
             android:gravity="center"
-
+            app:iconTint="#F3F3F3"
             android:stateListAnimator="@null"
             app:cornerRadius="18dp"
             android:text="Add Coupon to Cart"

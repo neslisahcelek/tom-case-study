@@ -57,17 +57,18 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center"
             android:gravity="center"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/buttonDecrease"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:padding="2dp"
                 android:text="-"
-                android:textSize="15sp"
-                app:cornerRadius="10dp"
+                android:textSize="14sp"
+                app:cornerRadius="8dp"
                 app:iconTint="#F3F3F3" />
 
             <TextView
@@ -81,12 +82,13 @@
 
             <Button
                 android:id="@+id/buttonIncrease"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:padding="2dp"
                 android:text="+"
                 android:textAlignment="center"
-                android:textSize="15sp"
-                app:cornerRadius="10dp"
+                android:textSize="14sp"
+                app:cornerRadius="8dp"
                 app:iconTint="#F3F3F3" />
 
             />

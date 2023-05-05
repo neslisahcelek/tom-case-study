@@ -9,12 +9,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="150dp"
-        android:layout_marginBottom="150dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="40dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +22,7 @@
             <ImageView
                 android:id="@+id/imageViewDetail"
                 android:layout_width="match_parent"
-                android:layout_height="220dp">
+                android:layout_height="320dp">
 
             </ImageView>
 
@@ -34,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Product Price"
+                android:layout_margin="8dp"
                 android:textAlignment="center"
                 android:textSize="24sp" />
 
@@ -43,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="0"
+                android:layout_margin="8dp"
                 android:text="Product Name"
                 android:textAlignment="center"
                 android:textSize="24sp" />
@@ -51,6 +51,7 @@
                 android:id="@+id/textViewDetailProductDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
+                android:layout_margin="8dp"
                 android:layout_gravity="center"
                 android:text="Product Description"
                 android:textAlignment="center"
@@ -59,8 +60,8 @@
             <Button
                 android:id="@+id/buttonAddtoCart"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:text="add to shopping cart">
 

@@ -17,11 +17,18 @@ import com.example.shoppingcart.mock.MockData
 
 class ProductDetailFragment: Fragment() {
 
-    private var _binding: FragmentProductDetailBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentProductDetailBinding
 
-    fun ProductDetailFragment() {
-
+    companion object {
+        fun newInstance(title: String, imageResource: Int, price: String): ProductDetailFragment {
+            val args = Bundle()
+            args.putString("productTitle", title)
+            args.putInt("productImage", imageResource)
+            args.putString("productPrice", price)
+            val fragment = ProductDetailFragment()
+            fragment.arguments = args
+            return fragment
+        }
     }
 
     override fun onCreateView(
@@ -29,31 +36,30 @@ class ProductDetailFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentProductDetailBinding.inflate(inflater, container, false)
-        var view = inflater.inflate(com.example.shoppingcart.R.layout.fragment_product_detail, container, false)
+        binding = FragmentProductDetailBinding.inflate(inflater, container, false)
         val productTitle = arguments?.getString("productTitle")
         val productImage = arguments?.getInt("productImage")
         val productPrice = arguments?.getString("productPrice")
         val productDescription = arguments?.getString("productDescription")
 
-        var productImageView = binding.imageViewDetail
         if (productImage != null) {
-            productImageView.setImageResource(productImage)
+            binding.imageViewDetail.setImageResource(productImage)
         }
-        var productTitleView = binding.textViewDetailProductName
         if (productTitle != null) {
-            productTitleView.text = productTitle
+            binding.textViewDetailProductName.text = productTitle
         }
-        var productPriceView = binding.textViewDetailProductPrice
         if (productPrice != null) {
-            productPriceView.text = productPrice
+            binding.textViewDetailProductPrice.text = productPrice
         }
-        var productDescriptionView = binding.textViewDetailProductDescription
         if (productDescription != null) {
-            productDescriptionView.text = productDescription
+            binding.textViewDetailProductDescription.text = productDescription
         }
 
-        return view
+        binding.buttonAddtoCart.setOnClickListener {
+            // 
+        }
+
+        return binding.root
     }
 
 

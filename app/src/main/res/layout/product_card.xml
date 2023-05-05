@@ -36,7 +36,7 @@
                 android:id="@+id/textViewDetailProductPrice"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="13dp"
                 android:layout_marginBottom="8dp"
                 android:text="20tl"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
@@ -45,8 +45,8 @@
 
             <Button
                 android:id="@+id/buttonAddToCart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="45dp"
+                android:layout_height="50dp"
                 android:layout_gravity="right|center_vertical|end"
                 android:layout_marginEnd="0dp"
                 android:onClick="addToCart"
