@@ -28,15 +28,14 @@ class CartFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_cart, container, false)
 
         val total:TextView = view.findViewById(R.id.textViewTotalPrice)
-        total.text = "Total Price: ₺50"
+        total.text = "Total Price: ₺" + MockData.MockCart.cart.totalPrice.toString()
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerViewCart)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(this.context,1,
             GridLayoutManager.VERTICAL, false)
 
-
-        val adapter = CartProductAdapter(MockData.MockCart.CartProductList) //all products in shopping cart from database
+        val adapter = CartProductAdapter(MockData.MockCart.cart.items) //all products in shopping cart from database
         recyclerView.adapter = adapter
 
 

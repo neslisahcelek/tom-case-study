@@ -1,18 +1,20 @@
 package com.example.shoppingcart.adapters
 
+import android.content.ContentValues
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shoppingcart.Cart
-import com.example.shoppingcart.Coupon
-import com.example.shoppingcart.Product
-import com.example.shoppingcart.R
+import com.example.shoppingcart.*
+import com.example.shoppingcart.mock.MockData
 
-class CartProductAdapter (private var cartProducts:ArrayList<Product>): RecyclerView.Adapter<CartProductAdapter.CartProductViewHolder>(){
+class CartProductAdapter (public var cartItems:ArrayList<Item>): RecyclerView.Adapter<CartProductAdapter.CartProductViewHolder>(){
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -23,30 +25,42 @@ class CartProductAdapter (private var cartProducts:ArrayList<Product>): Recycler
     }
 
     override fun onBindViewHolder(holder: CartProductViewHolder, position: Int) {
-        val currentItem = cartProducts[position]
-        holder.productImage.setImageResource(currentItem.productImage)
-        holder.productTitle.text = currentItem.productName
-        holder.productPrice.text = "₺" + currentItem.productPrice.toString()
+        val currentItem = cartItems[position]
+        currentItem.product?.let { holder.productImage.setImageResource(it.productImage) }
+        holder.productTitle.text = currentItem.product?.productName ?: "Product Name"
+        holder.productPrice.text = "₺" + currentItem.subtotal.toString()
+        holder.productQuantity.text = currentItem.quantity.toString()
         holder.decreaseButton.setOnClickListener {
-
+            Log.println(Log.INFO, ContentValues.TAG, "decrease button clicked")
+            changeQuantity(currentItem, MockData.MockCart.cart, false)
+            holder.productQuantity.text = currentItem.quantity.toString()
+            holder.productPrice.text = "₺" + currentItem.subtotal.toString()
         }
         holder.increaseButton.setOnClickListener {
-
-
+            changeQuantity(currentItem, MockData.MockCart.cart, true)
+            holder.productQuantity.text = currentItem.quantity.toString()
+            holder.productPrice.text = "₺" + currentItem.subtotal.toString()
         }
     }
-    fun addToCart(product: Product, shoppingCart: Cart) { //add product to shopping cart
-        if (shoppingCart.products.contains(product)) {
-            shoppingCart.products.add(product)
-///////////////////////////
-
-        } else {
-            shoppingCart.products.add(product)
-            println("Product added to cart" + product.productID)
+    fun changeQuantity(item:Item, shoppingCart: Cart,isIncrease: Boolean) { //add product to shopping cart
+        if (shoppingCart.items.contains(item)) {
+            if (isIncrease) {
+                item.quantity = item.quantity + 1 //increase quantity
+            } else {
+                item.quantity = item.quantity - 1 //decrease quantity
+                Log.println(Log.INFO, ContentValues.TAG, "quantity decreased" + item.quantity)
+                if (item.quantity == 0) { //if quantity is 0, remove item from cart
+                    shoppingCart.items.remove(item)
+                    return
+                }
+            }
+            item.subtotal = item.quantity * item.product!!.productPrice
+            Log.println(Log.INFO, ContentValues.TAG, "subtotal changed" + item.subtotal)
+            return
         }
     }
     override fun getItemCount(): Int {
-        return cartProducts.size
+        return cartItems.size
     }
 
     class CartProductViewHolder(view: View): RecyclerView.ViewHolder(view){
@@ -55,5 +69,6 @@ class CartProductAdapter (private var cartProducts:ArrayList<Product>): Recycler
         var productPrice: TextView = view.findViewById(R.id.textViewCartProductPrice)
         var decreaseButton: Button = view.findViewById(R.id.buttonDecrease)
         var increaseButton: Button = view.findViewById(R.id.buttonIncrease)
+        var productQuantity: TextView = view.findViewById(R.id.textViewQuantity)
     }
 }

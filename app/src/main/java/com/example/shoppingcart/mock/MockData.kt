@@ -1,20 +1,17 @@
 package com.example.shoppingcart.mock
 
-import com.example.shoppingcart.Cart
-import com.example.shoppingcart.Coupon
-import com.example.shoppingcart.Product
-import com.example.shoppingcart.R
+import com.example.shoppingcart.*
 
 object MockData {
  object MockProduct {
-  val product1 = Product(1, "Product 1", 10, "desc", 12, R.drawable.shopping_cart_48px)
-  val product2 = Product(1, "Product 1", 10, "desc", 12, R.drawable.shopping_cart_48px)
-  val product3 = Product(3, "Product 1", 10, "desc", 12, R.drawable.shopping_cart_48px)
-  val product4 = Product(4, " 1", 10, "desc", 12, R.drawable.shopping_cart_48px)
-  val product5 = Product(5, "Product 1", 10, "desc", 12, R.drawable.shopping_cart_48px)
-  val product6 = Product(6, "Prot 1", 10, "desc", 12, R.drawable.shopping_cart_48px)
-  val product8 = Product(7, "Product 1", 10, "desc", 12, R.drawable.shopping_cart_48px)
-  val product7 = Product(8, "Product 1", 1000, "desc", 12, R.drawable.shopping_cart_48px)
+  val product1 = Product(1, "cheese", 80, "desc", 12, R.drawable.shopping_cart_48px)
+  val product2 = Product(1, "oil", 100, "desc", 12, R.drawable.shopping_cart_48px)
+  val product3 = Product(3, "honey", 70, "desc", 12, R.drawable.shopping_cart_48px)
+  val product4 = Product(4, "strawberry", 30, "desc", 12, R.drawable.shopping_cart_48px)
+  val product5 = Product(5, "peanut", 70, "desc", 12, R.drawable.shopping_cart_48px)
+  val product6 = Product(6, "melon", 20, "desc", 12, R.drawable.shopping_cart_48px)
+  val product8 = Product(7, "milk", 19, "desc", 12, R.drawable.shopping_cart_48px)
+  val product7 = Product(8, "water", 5, "desc", 12, R.drawable.shopping_cart_48px)
 
  }
  object MockCoupon {
@@ -29,13 +26,12 @@ object MockData {
 
  }
  object MockCart {
-  val cart = Cart(1, arrayListOf(),0,0, Coupon(1,"",0,""))
-  val CartProductList = arrayListOf<Product>(
-   MockProduct.product4,
-   MockProduct.product5,
-   MockProduct.product7,
-   MockProduct.product8
-  )
+  val cartProductList = arrayListOf<Item>()
+  val cart = Cart(1,cartProductList, null )
+
+ }
+ object MockItem{
+
  }
  object MockProductList{
     val productList = arrayListOf<Product>(

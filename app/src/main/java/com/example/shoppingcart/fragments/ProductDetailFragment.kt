@@ -56,7 +56,7 @@ class ProductDetailFragment: Fragment() {
         }
 
         binding.buttonAddtoCart.setOnClickListener {
-            // 
+            //
         }
 
         return binding.root

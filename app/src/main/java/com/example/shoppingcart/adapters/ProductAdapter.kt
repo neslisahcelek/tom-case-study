@@ -1,23 +1,22 @@
 package com.example.shoppingcart.adapters
 
 
-import android.graphics.Color
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shoppingcart.Cart
-import com.example.shoppingcart.Coupon
-import com.example.shoppingcart.Product
-import com.example.shoppingcart.R
-import com.example.shoppingcart.fragments.ItemListFragment
+import com.example.shoppingcart.*
 import com.example.shoppingcart.fragments.ProductDetailFragment
+import com.example.shoppingcart.mock.MockData
+import kotlin.math.log
 
 
 class ProductAdapter(private var products:ArrayList<Product>):RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
@@ -37,7 +36,7 @@ class ProductAdapter(private var products:ArrayList<Product>):RecyclerView.Adapt
         holder.productTitle.text = currentProduct.productName
         holder.productPrice.text = "₺" + currentProduct.productPrice.toString()
         holder.productButton.setOnClickListener {
-            addToCart(products[position], Cart(1, arrayListOf(),0,0, Coupon(1,"",0,"desc")))
+            addToCart(currentProduct, MockData.MockCart.cart)
         }
         holder.cardView.setOnClickListener {
             val bundle = Bundle()
@@ -54,13 +53,25 @@ class ProductAdapter(private var products:ArrayList<Product>):RecyclerView.Adapt
         }
     }
     fun addToCart(product: Product, shoppingCart: Cart) { //add product to shopping cart
-        if (shoppingCart.products.contains(product)) {
-            shoppingCart.products.add(product)
-///////////////////////////
-
-        } else {
-            shoppingCart.products.add(product)
-            println("Product added to cart" + product.productID)
+        if (shoppingCart.items.isEmpty()){
+            var cartItem: Item = Item(1, product, 1, 1, product.productPrice)
+            shoppingCart.items.add(cartItem)
+            Log.println(Log.INFO, TAG, "Product added to empty cart" + product.productName)
+            return
+        }
+        for (item in shoppingCart.items) {
+            if (item.product?.productID == product.productID) {
+                item.quantity++
+                item.subtotal = item.quantity * item.product!!.productPrice
+                Log.println(Log.INFO, TAG, "Product increase" + product.productName)
+                return
+            } else {
+                var cartItem: Item = Item(1, product, 1, 1, product.productPrice)
+                shoppingCart.items.add(cartItem)
+                println("Product added to cart" + product.productName)
+                Log.println(Log.INFO, TAG, "Product added to cart" + product.productName)
+                return
+            }
         }
     }
     override fun getItemCount(): Int {

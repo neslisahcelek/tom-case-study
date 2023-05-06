@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingcart.Cart
 import com.example.shoppingcart.Coupon
 import com.example.shoppingcart.R
+import com.example.shoppingcart.mock.MockData
 
 class CouponAdapter(private var coupons:ArrayList<Coupon>): RecyclerView.Adapter<CouponAdapter.CouponViewHolder>(){
     override fun onCreateViewHolder(
@@ -23,7 +24,7 @@ class CouponAdapter(private var coupons:ArrayList<Coupon>): RecyclerView.Adapter
     override fun onBindViewHolder(holder: CouponViewHolder, position: Int) {
         holder.couponDescription.text = coupons[position].couponDescription
         holder.couponButton.setOnClickListener {
-            addCouponToCart(coupons[position], Cart(1, arrayListOf(),0,0, Coupon(1,"",0,"des ")))
+            addCouponToCart(coupons[position], MockData.MockCart.cart)
         }
     }
     fun addCouponToCart(coupon: Coupon, shoppingCart: Cart) { //add product to shopping cart
