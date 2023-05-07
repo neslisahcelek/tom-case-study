@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shoppingcart.Cart
-import com.example.shoppingcart.Coupon
+import com.example.shoppingcart.model.Cart
+import com.example.shoppingcart.model.Coupon
 import com.example.shoppingcart.R
-import com.example.shoppingcart.mock.MockData
+import com.example.shoppingcart.model.MockData
 
 class CouponAdapter(private var coupons:ArrayList<Coupon>): RecyclerView.Adapter<CouponAdapter.CouponViewHolder>(){
     override fun onCreateViewHolder(

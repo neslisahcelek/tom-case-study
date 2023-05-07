@@ -1,6 +1,7 @@
-package com.example.shoppingcart.mock
+package com.example.shoppingcart.model
 
 import com.example.shoppingcart.*
+import java.util.Calendar
 
 object MockData {
  object MockProduct {
@@ -15,19 +16,19 @@ object MockData {
 
  }
  object MockCoupon {
-  val coupon1:Coupon = Coupon(1, "Coupon 1", 10,"coupon 1")
-  val coupon2:Coupon = Coupon(2, "Coupon 2", 20,"coupon 2")
-  val coupon3:Coupon = Coupon(3, "Coupon 3", 30,"coupon 3")
-  val coupon4:Coupon = Coupon(4, "Coupon 4", 40,"coupon 4")
-  val coupon5:Coupon = Coupon(5, "Coupon 5", 50,"coupon 5")
-  val coupon6:Coupon = Coupon(6, "Coupon 6", 60,"coupon 6")
+  val coupon1: Coupon = Coupon(1, "Coupon 1", 10,"coupon 1")
+  val coupon2: Coupon = Coupon(2, "Coupon 2", 20,"coupon 2")
+  val coupon3: Coupon = Coupon(3, "Coupon 3", 30,"coupon 3")
+  val coupon4: Coupon = Coupon(4, "Coupon 4", 40,"coupon 4")
+  val coupon5: Coupon = Coupon(5, "Coupon 5", 50,"coupon 5")
+  val coupon6: Coupon = Coupon(6, "Coupon 6", 60,"coupon 6")
 
   val couponList:ArrayList<Coupon> = arrayListOf(coupon1, coupon2, coupon3, coupon4, coupon5, coupon6)
 
  }
  object MockCart {
   val cartProductList = arrayListOf<Item>()
-  val cart = Cart(1,cartProductList, null )
+  val cart = Cart(1,cartProductList, null ,0,0,1,Calendar.getInstance().time)
 
  }
  object MockItem{

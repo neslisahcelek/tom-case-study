@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingcart.*
-import com.example.shoppingcart.mock.MockData
+import com.example.shoppingcart.model.Cart
+import com.example.shoppingcart.model.Item
+import com.example.shoppingcart.model.MockData
 
 class CartProductAdapter (public var cartItems:ArrayList<Item>): RecyclerView.Adapter<CartProductAdapter.CartProductViewHolder>(){
 
@@ -42,7 +43,7 @@ class CartProductAdapter (public var cartItems:ArrayList<Item>): RecyclerView.Ad
             holder.productPrice.text = "₺" + currentItem.subtotal.toString()
         }
     }
-    fun changeQuantity(item:Item, shoppingCart: Cart,isIncrease: Boolean) { //add product to shopping cart
+    fun changeQuantity(item: Item, shoppingCart: Cart, isIncrease: Boolean) { //add product to shopping cart
         if (shoppingCart.items.contains(item)) {
             if (isIncrease) {
                 item.quantity = item.quantity + 1 //increase quantity

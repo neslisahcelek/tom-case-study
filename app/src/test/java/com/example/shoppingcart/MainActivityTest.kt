@@ -1,5 +1,8 @@
 package com.example.shoppingcart
 
+import com.example.shoppingcart.model.Cart
+import com.example.shoppingcart.model.Coupon
+import com.example.shoppingcart.model.Product
 import org.junit.Assert.*
 
 import org.junit.Before

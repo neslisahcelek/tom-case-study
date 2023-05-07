@@ -1,4 +1,4 @@
-package com.example.shoppingcart
+package com.example.shoppingcart.model
 
 data class Coupon(
     val couponID: Int,

@@ -10,13 +10,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingcart.*
-import com.example.shoppingcart.fragments.ProductDetailFragment
-import com.example.shoppingcart.mock.MockData
-import kotlin.math.log
+import com.example.shoppingcart.model.Cart
+import com.example.shoppingcart.model.Item
+import com.example.shoppingcart.view.fragments.ProductDetailFragment
+import com.example.shoppingcart.model.MockData
+import com.example.shoppingcart.model.Product
 
 
 class ProductAdapter(private var products:ArrayList<Product>):RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){

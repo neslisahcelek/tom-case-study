@@ -1,18 +1,11 @@
-package com.example.shoppingcart.fragments
+package com.example.shoppingcart.view.fragments
 
-import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.shoppingcart.adapters.ProductAdapter
 import com.example.shoppingcart.databinding.FragmentProductDetailBinding
-import com.example.shoppingcart.mock.MockData
 
 
 class ProductDetailFragment: Fragment() {
@@ -60,6 +53,9 @@ class ProductDetailFragment: Fragment() {
         }
 
         return binding.root
+    }
+    fun addToCart(view:View) { //add product to shopping cart
+
     }
 
 
