@@ -4,12 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
+import com.example.shoppingcart.R
 import com.example.shoppingcart.databinding.FragmentProductDetailBinding
+import com.example.shoppingcart.viewModel.ProductDetailViewModel
+import com.example.shoppingcart.viewModel.ProductListViewModel
 
 
 class ProductDetailFragment: Fragment() {
-
+    private lateinit var viewModel: ProductDetailViewModel
     private lateinit var binding: FragmentProductDetailBinding
 
     companion object {
@@ -56,7 +63,9 @@ class ProductDetailFragment: Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel= ViewModelProvider(this).get(ProductDetailViewModel::class.java)
+        viewModel.getDataFromRoom()
+        observeLiveData()
         /*arguments?.let {
             val safeArgs = ProductDetailFragmentArgs.fromBundle(it)
             val productTitle = safeArgs.productTitle
@@ -64,8 +73,17 @@ class ProductDetailFragment: Fragment() {
             val productPrice = safeArgs.productPrice
             val productDescription = safeArgs.productDescription
         }
-
          */
+    }
+    private fun observeLiveData() {
+        viewModel.productLiveData.observe(viewLifecycleOwner, { product ->
+            product?.let {
+                //binding.imageViewDetail.setImageResource(product.productImage)
+                binding.textViewDetailProductName.text = product.productName
+                binding.textViewDetailProductPrice.text = product.productPrice.toString()
+                binding.textViewDetailProductDescription.text = product.productDescription
+            }
+        })
     }
 
     fun addToCart(view:View) { //add product to shopping cart

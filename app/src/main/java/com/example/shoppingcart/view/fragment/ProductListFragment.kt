@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.shoppingcart.*
 import com.example.shoppingcart.adapter.ProductAdapter
 import com.example.shoppingcart.view.MainActivity
@@ -47,15 +48,30 @@ class ProductListFragment : Fragment() {
         val adapter = viewModel.products.let { ProductAdapter(it) } //all products from database
          */
         recyclerView.adapter = productAdapter
+
+        val errorText:TextView = view?.findViewById(R.id.itemListError) ?: return
+        val loadBar:ProgressBar = view?.findViewById(R.id.itemListLoading) ?: return
+        val refresh: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshItemList)
+        refresh.setOnRefreshListener {
+            recyclerView.visibility = View.GONE
+            errorText.visibility = View.GONE
+            loadBar.visibility = View.VISIBLE
+            refresh.isRefreshing = false
+            viewModel.refreshData()
+            refresh.isRefreshing = false
+        }
+        observeLiveData()
         //adapter?.notifyDataSetChanged()
     }
-    fun observeLiveData(){
+    private fun observeLiveData(){
         val recyclerView:RecyclerView = view?.findViewById(R.id.recyclerViewItemList) ?: return
         val errorText:TextView = view?.findViewById(R.id.itemListError) ?: return
         val loadBar:ProgressBar = view?.findViewById(R.id.itemListLoading) ?: return
 
         viewModel.products.observe(viewLifecycleOwner, Observer {
             products -> products?.let {
+            errorText.visibility = View.GONE
+            loadBar.visibility = View.GONE
             recyclerView.visibility = View.VISIBLE
             productAdapter.updateProductList(products)
             }
@@ -63,20 +79,26 @@ class ProductListFragment : Fragment() {
         viewModel.productError.observe(viewLifecycleOwner, Observer {
                 error -> error?.let {
                     if(it){
+                        recyclerView.visibility = View.GONE
+                        loadBar.visibility = View.GONE
                         errorText.visibility = View.VISIBLE
                     }else{
                         errorText.visibility = View.GONE
+                        recyclerView.visibility = View.VISIBLE
+                        loadBar.visibility = View.GONE
                     }
         }
         })
         viewModel.productLoading.observe(viewLifecycleOwner, Observer {
                 loading -> loading?.let {
                 if(it){
-                    loadBar.visibility = View.VISIBLE
                     recyclerView.visibility = View.GONE
                     errorText.visibility = View.GONE
+                    loadBar.visibility = View.VISIBLE
                 }else{
                     loadBar.visibility = View.GONE
+                    errorText.visibility = View.GONE
+                    recyclerView.visibility = View.GONE
                 }
              }
         })
