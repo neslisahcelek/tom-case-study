@@ -20,7 +20,7 @@ import com.example.shoppingcart.model.MockData
 import com.example.shoppingcart.model.Product
 
 
-class ProductAdapter(private var products:ArrayList<Product>):RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
+class ProductAdapter(var products:ArrayList<Product>):RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -85,5 +85,11 @@ class ProductAdapter(private var products:ArrayList<Product>):RecyclerView.Adapt
         var productPrice: TextView = view.findViewById(com.example.shoppingcart.R.id.textViewDetailProductPrice)
         var productButton: Button = view.findViewById(com.example.shoppingcart.R.id.buttonAddToCart)
         var cardView: View = view.findViewById(com.example.shoppingcart.R.id.cardViewProduct)
+    }
+
+    fun updateItemList(newItemList: ArrayList<Product>) {
+        products.clear()
+        products.addAll(newItemList)
+        notifyDataSetChanged()
     }
 }
