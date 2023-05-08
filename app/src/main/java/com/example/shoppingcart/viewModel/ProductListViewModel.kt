@@ -1,33 +1,29 @@
 package com.example.shoppingcart.viewModel
 
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.shoppingcart.model.MockData
 import com.example.shoppingcart.model.Product
 import com.example.shoppingcart.service.CartAPIService
+import com.example.shoppingcart.service.CartDatabase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 
-class ProductListViewModel: ViewModel(){
+class ProductListViewModel(application: Application): BaseViewModel(application){
     private val cartApiService = CartAPIService()
     private val disposable = CompositeDisposable()
+
     val products = MutableLiveData<List<Product>>()
     val productError = MutableLiveData<Boolean>()
     val productLoading = MutableLiveData<Boolean>()
 
     fun refreshData(){
-        val product1 = Product(1, "cheese", 80, "desc", MockData.mockCategory.category1, java.util.ArrayList<String>())
-        val product2 = Product(2, "milk", 80, "desc", MockData.mockCategory.category1, java.util.ArrayList<String>())
-        val product3 = Product(3, "bread", 80, "desc", MockData.mockCategory.category1, java.util.ArrayList<String>())
-        val product4 = Product(4, "cheese", 80, "desc", MockData.mockCategory.category1, java.util.ArrayList<String>())
-        val product5 = Product(5, "milk", 80, "desc", MockData.mockCategory.category1, java.util.ArrayList<String>())
-        val product6 = Product(6, "bread", 80, "desc", MockData.mockCategory.category1, java.util.ArrayList<String>())
-        val product7 = Product(7, "cheese", 80, "desc", MockData.mockCategory.category1, java.util.ArrayList<String>())
-        val product8 = Product(8, "milk", 80, "desc", MockData.mockCategory.category1, java.util.ArrayList<String>())
-        products.value = arrayListOf(product1, product2, product3, product4, product5, product6, product7, product8)
+          products.value = MockData.MockProductList.productList
         //getDataFromAPI()
     }
     private fun getDataFromAPI(){
@@ -39,9 +35,8 @@ class ProductListViewModel: ViewModel(){
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object:DisposableSingleObserver<List<Product>>(){
                     override fun onSuccess(t: List<Product>) {
-                        products.value = t
-                        productError.value = false
-                        productLoading.value = false
+                        storeInSQLite(t)
+                        //showProducts(t)
                     }
 
                     override fun onError(e: Throwable) {
@@ -51,5 +46,25 @@ class ProductListViewModel: ViewModel(){
                     }
                 })
         )
+    }
+    private fun showProducts(productList:List<Product>){
+        products.value = productList
+        productError.value = false
+        productLoading.value = false
+    }
+    private fun storeInSQLite(productList:List<Product>){
+        launch {
+            val dao = CartDatabase(getApplication()).productDao()
+
+            dao.deleteAllProducts()
+
+            val listLong = dao.insertAll(*productList.toTypedArray())
+            var i = 0
+            while (i < productList.size){
+                productList[i].uuid = listLong[i].toInt()
+                i=i+1
+            }
+            showProducts(productList)
+        }
     }
 }

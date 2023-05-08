@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingcart.R
 import com.example.shoppingcart.databinding.FragmentProductDetailBinding
+import com.example.shoppingcart.util.downloadFromUrl
+import com.example.shoppingcart.util.placeHolderProgressBar
 import com.example.shoppingcart.viewModel.ProductDetailViewModel
 import com.example.shoppingcart.viewModel.ProductListViewModel
 
@@ -78,7 +80,7 @@ class ProductDetailFragment: Fragment() {
     private fun observeLiveData() {
         viewModel.productLiveData.observe(viewLifecycleOwner, { product ->
             product?.let {
-                //binding.imageViewDetail.setImageResource(product.productImage)
+               // binding.imageViewDetail.downloadFromUrl(product.productImage[0], placeHolderProgressBar(binding.imageViewDetail.context))
                 binding.textViewDetailProductName.text = product.productName
                 binding.textViewDetailProductPrice.text = product.productPrice.toString()
                 binding.textViewDetailProductDescription.text = product.productDescription

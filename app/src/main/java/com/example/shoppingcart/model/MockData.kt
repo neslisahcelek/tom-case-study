@@ -6,14 +6,17 @@ import java.util.Calendar
 
 object MockData {
  object MockProduct {
-  val product1 = Product(1, "cheese", 80, "desc", category1, java.util.ArrayList<String>())
-    val product2 = Product(2, "milk", 80, "desc", category1, java.util.ArrayList<String>())
-      val product3 = Product(3, "bread", 80, "desc", category1, java.util.ArrayList<String>())
-  val product4 = Product(4, "cheese", 80, "desc", category1, java.util.ArrayList<String>())
-    val product5 = Product(5, "milk", 80, "desc", category1, java.util.ArrayList<String>())
-      val product6 = Product(6, "bread", 80, "desc", category1, java.util.ArrayList<String>())
-    val product7 = Product(7, "cheese", 80, "desc", category1, java.util.ArrayList<String>())
-      val product8 = Product(8, "milk", 80, "desc", category1, java.util.ArrayList<String>())
+     val images = arrayListOf<String> (
+        "https://cdn.dsmcdn.com/ty318/product/media/images/20220202/14/41808255/378512354/1/1_org_zoom.jpg")
+
+  val product1 = Product(1, "laptop", 80, "pc", category1, images)
+    val product2 = Product(2, "milk", 80, "desc", category1, images)
+      val product3 = Product(3, "bread", 80, "desdlşldvvc", category1, images)
+  val product4 = Product(4, "cheese", 80, "desc", category1, images)
+    val product5 = Product(5, "milk", 80, "desc", category1, images)
+      val product6 = Product(6, "bread", 80, "desc", category1, images)
+    val product7 = Product(7, "cheese", 80, "desc", category1, images)
+      val product8 = Product(8, "milk", 80, "desc", category1, images)
 
 
  }

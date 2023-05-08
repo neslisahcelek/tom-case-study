@@ -18,6 +18,8 @@ import com.example.shoppingcart.model.Item
 import com.example.shoppingcart.view.fragment.ProductDetailFragment
 import com.example.shoppingcart.model.MockData
 import com.example.shoppingcart.model.Product
+import com.example.shoppingcart.util.downloadFromUrl
+import com.example.shoppingcart.util.placeHolderProgressBar
 
 
 class ProductAdapter(var products:ArrayList<Product>):RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
@@ -33,7 +35,9 @@ class ProductAdapter(var products:ArrayList<Product>):RecyclerView.Adapter<Produ
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         var currentProduct = products[position]
-        holder.productImage.setImageResource(R.drawable.shopping_cart_48px) ///currentProduct.productImage
+        holder.productImage.downloadFromUrl(
+            currentProduct.productImage[0],
+            placeHolderProgressBar(holder.productImage.context)) ///currentProduct.productImage
         holder.productTitle.text = currentProduct.productName
         holder.productPrice.text = "₺" + currentProduct.productPrice.toString()
         holder.productButton.setOnClickListener {
