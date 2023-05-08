@@ -12,20 +12,10 @@ data class Product(
     @SerializedName("description")
     var productDescription: String,
     @SerializedName("category")
-    var categoryID: Int,
-    @SerializedName("image")
-    var productImage: Int
-) {
-    constructor(productID: Int, productName: String, productPrice: Int) : this(
-        productID,
-        productName,
-        productPrice,
-        "",
-        0,
-        0
-    )
-
-}
+    var categoryID: Category,
+    @SerializedName("images")
+    var productImage: ArrayList<String>
+)
 
 
 

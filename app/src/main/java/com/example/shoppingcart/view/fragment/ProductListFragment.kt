@@ -1,4 +1,4 @@
-package com.example.shoppingcart.view.fragments
+package com.example.shoppingcart.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingcart.*
-import com.example.shoppingcart.adapters.ProductAdapter
-import com.example.shoppingcart.model.MockData
+import com.example.shoppingcart.adapter.ProductAdapter
 import com.example.shoppingcart.view.MainActivity
+import com.example.shoppingcart.viewModel.ProductListViewModel
 
 class ProductListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,14 +31,10 @@ class ProductListFragment : Fragment() {
             GridLayoutManager.VERTICAL, false)
 
         var main: MainActivity = activity as MainActivity
-        val adapter = main.databaseproducts?.let { ProductAdapter(it) } //all products from database
+        val adapter = ProductListViewModel. .let { ProductAdapter(it) } //all products from database
         recyclerView.adapter = adapter
         adapter?.notifyDataSetChanged()
 
         return view
     }
-
-
-
-
 }

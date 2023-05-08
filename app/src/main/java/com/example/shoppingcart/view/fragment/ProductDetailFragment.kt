@@ -1,4 +1,4 @@
-package com.example.shoppingcart.view.fragments
+package com.example.shoppingcart.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -54,6 +54,20 @@ class ProductDetailFragment: Fragment() {
 
         return binding.root
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        /*arguments?.let {
+            val safeArgs = ProductDetailFragmentArgs.fromBundle(it)
+            val productTitle = safeArgs.productTitle
+            val productImage = safeArgs.productImage
+            val productPrice = safeArgs.productPrice
+            val productDescription = safeArgs.productDescription
+        }
+
+         */
+    }
+
     fun addToCart(view:View) { //add product to shopping cart
 
     }

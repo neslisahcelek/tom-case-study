@@ -1,4 +1,4 @@
-package com.example.shoppingcart.adapters
+package com.example.shoppingcart.adapter
 
 
 import android.content.ContentValues.TAG
@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingcart.*
 import com.example.shoppingcart.model.Cart
 import com.example.shoppingcart.model.Item
-import com.example.shoppingcart.view.fragments.ProductDetailFragment
+import com.example.shoppingcart.view.fragment.ProductDetailFragment
 import com.example.shoppingcart.model.MockData
 import com.example.shoppingcart.model.Product
 
@@ -33,7 +33,7 @@ class ProductAdapter(private var products:ArrayList<Product>):RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         var currentProduct = products[position]
-        holder.productImage.setImageResource(currentProduct.productImage)
+        holder.productImage.setImageResource(R.drawable.shopping_cart_48px) ///currentProduct.productImage
         holder.productTitle.text = currentProduct.productName
         holder.productPrice.text = "₺" + currentProduct.productPrice.toString()
         holder.productButton.setOnClickListener {
@@ -44,7 +44,7 @@ class ProductAdapter(private var products:ArrayList<Product>):RecyclerView.Adapt
             bundle.putString("productTitle", currentProduct.productName)
             bundle.putInt("productPrice", currentProduct.productPrice)
             bundle.putString("productDescription", currentProduct.productDescription)
-            bundle.putInt("productImage", currentProduct.productImage)
+            bundle.putInt("productImage", R.drawable.shopping_cart_48px)  ///currentProduct.productImage
             val productDetailFragment = ProductDetailFragment()
             productDetailFragment.arguments = bundle
             val fragmentManager = (holder.itemView.context as FragmentActivity).supportFragmentManager

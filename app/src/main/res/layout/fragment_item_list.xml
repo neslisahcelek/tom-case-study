@@ -1,24 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshItemList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.ItemListFragment">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/item_list"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.ProductListFragment">
+    tools:context=".view.fragment.ProductListFragment">
 
-        <androidx.core.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewItemList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp">
+            android:layout_height="match_parent" />
+    </androidx.core.widget.NestedScrollView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewItemList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-        </androidx.core.widget.NestedScrollView>
+    <TextView
+        android:id="@+id/itemListError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Try again!"
+        app:layout_constraintBottom_toBottomOf="@+id/nestedScrollView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </TextView>
+    <ProgressBar
+        android:id="@+id/itemListLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/nestedScrollView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </ProgressBar>
 
-
-</FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

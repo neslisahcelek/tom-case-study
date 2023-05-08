@@ -1,4 +1,4 @@
-package com.example.shoppingcart.adapters
+package com.example.shoppingcart.adapter
 
 import android.content.ContentValues
 import android.util.Log
@@ -27,7 +27,7 @@ class CartProductAdapter (public var cartItems:ArrayList<Item>): RecyclerView.Ad
 
     override fun onBindViewHolder(holder: CartProductViewHolder, position: Int) {
         val currentItem = cartItems[position]
-        currentItem.product?.let { holder.productImage.setImageResource(it.productImage) }
+        currentItem.product?.let { holder.productImage.setImageResource(R.drawable.shopping_cart_48px) } ///////
         holder.productTitle.text = currentItem.product?.productName ?: "Product Name"
         holder.productPrice.text = "₺" + currentItem.subtotal.toString()
         holder.productQuantity.text = currentItem.quantity.toString()

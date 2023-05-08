@@ -1,19 +1,24 @@
 package com.example.shoppingcart.model
 
 import com.example.shoppingcart.*
+import com.example.shoppingcart.model.MockData.mockCategory.category1
 import java.util.Calendar
 
 object MockData {
  object MockProduct {
-  val product1 = Product(1, "cheese", 80, "desc", 12, R.drawable.shopping_cart_48px)
-  val product2 = Product(1, "oil", 100, "desc", 12, R.drawable.shopping_cart_48px)
-  val product3 = Product(3, "honey", 70, "desc", 12, R.drawable.shopping_cart_48px)
-  val product4 = Product(4, "strawberry", 30, "desc", 12, R.drawable.shopping_cart_48px)
-  val product5 = Product(5, "peanut", 70, "desc", 12, R.drawable.shopping_cart_48px)
-  val product6 = Product(6, "melon", 20, "desc", 12, R.drawable.shopping_cart_48px)
-  val product8 = Product(7, "milk", 19, "desc", 12, R.drawable.shopping_cart_48px)
-  val product7 = Product(8, "water", 5, "desc", 12, R.drawable.shopping_cart_48px)
+  val product1 = Product(1, "cheese", 80, "desc", category1, java.util.ArrayList<String>())
+    val product2 = Product(2, "milk", 80, "desc", category1, java.util.ArrayList<String>())
+      val product3 = Product(3, "bread", 80, "desc", category1, java.util.ArrayList<String>())
+  val product4 = Product(4, "cheese", 80, "desc", category1, java.util.ArrayList<String>())
+    val product5 = Product(5, "milk", 80, "desc", category1, java.util.ArrayList<String>())
+      val product6 = Product(6, "bread", 80, "desc", category1, java.util.ArrayList<String>())
+    val product7 = Product(7, "cheese", 80, "desc", category1, java.util.ArrayList<String>())
+      val product8 = Product(8, "milk", 80, "desc", category1, java.util.ArrayList<String>())
 
+
+ }
+ object mockCategory{
+  val category1 = Category(1, "techonology", "desc")
  }
  object MockCoupon {
   val coupon1: Coupon = Coupon(1, "Coupon 1", 10,"coupon 1")
