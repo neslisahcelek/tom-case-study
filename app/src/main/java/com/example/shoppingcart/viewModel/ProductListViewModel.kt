@@ -15,7 +15,11 @@ class ProductListViewModel: ViewModel(){
     private val disposable = CompositeDisposable()
     val products = MutableLiveData<List<Product>>()
     val productError = MutableLiveData<Boolean>()
+    val productLoading = MutableLiveData<Boolean>()
 
+    fun refreshData(){
+        getDataFromAPI()
+    }
     private fun getDataFromAPI(){
         disposable.add(
             cartApiService.getProducts()
@@ -25,10 +29,12 @@ class ProductListViewModel: ViewModel(){
                     override fun onSuccess(t: List<Product>) {
                         products.value = t
                         productError.value = false
+                        productLoading.value = false
                     }
 
                     override fun onError(e: Throwable) {
                         productError.value = true
+                        productLoading.value = false
                         e.printStackTrace()
                     }
                 })

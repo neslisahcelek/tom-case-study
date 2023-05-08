@@ -87,9 +87,9 @@ class ProductAdapter(var products:ArrayList<Product>):RecyclerView.Adapter<Produ
         var cardView: View = view.findViewById(com.example.shoppingcart.R.id.cardViewProduct)
     }
 
-    fun updateItemList(newItemList: ArrayList<Product>) {
+    fun updateProductList(newProductList: List<Product>) {
         products.clear()
-        products.addAll(newItemList)
+        products.addAll(newProductList)
         notifyDataSetChanged()
     }
 }
