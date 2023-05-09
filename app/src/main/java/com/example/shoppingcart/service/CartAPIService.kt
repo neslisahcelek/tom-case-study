@@ -30,7 +30,7 @@ class CartAPIService {
     fun addItemToCart(item: Item):Single<Item>{
         return api.addItemToCart(item)
     }
-    fun addProductToCart(product: Product):Single<Product>{
+    fun addProductToCart(product:Product):Single<Product>{
         return api.addProductToCart(product)
     }
     fun addCouponToCart(coupon: Coupon):Single<Coupon>{

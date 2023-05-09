@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
 @Entity(tableName = "product")
@@ -18,9 +19,9 @@ data class Product(
     var productDescription: String,
     @SerializedName("category")
     var categoryID: Category,
-    @SerializedName("images")
-    var productImage: ArrayList<String>
-){
+    @SerializedName("image")
+    var productImage: String
+) : Serializable {
     @PrimaryKey(autoGenerate = true)
     var uuid: Int = 0
 }

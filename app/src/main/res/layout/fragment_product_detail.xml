@@ -22,7 +22,9 @@
             <ImageView
                 android:id="@+id/imageViewDetail"
                 android:layout_width="match_parent"
-                android:layout_height="320dp">
+                android:layout_height="310dp"
+                android:padding="5dp"
+                android:layout_margin="8dp">
 
             </ImageView>
 
@@ -31,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Product Price"
+                android:hint="₺0"
                 android:layout_margin="8dp"
                 android:textAlignment="center"
                 android:textSize="24sp" />
@@ -50,7 +52,7 @@
             <TextView
                 android:id="@+id/textViewDetailProductDescription"
                 android:layout_width="wrap_content"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_gravity="center"
                 android:text="Product Description"
@@ -61,9 +63,10 @@
                 android:id="@+id/buttonAddtoCart"
                 android:onClick="addToCart"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
+                android:textSize="18sp"
                 android:text="add to shopping cart">
 
             </Button>

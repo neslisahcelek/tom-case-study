@@ -12,15 +12,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shoppingcart.*
+import com.example.shoppingcart.R
 import com.example.shoppingcart.model.Cart
 import com.example.shoppingcart.model.Item
-import com.example.shoppingcart.view.fragment.ProductDetailFragment
 import com.example.shoppingcart.model.MockData
 import com.example.shoppingcart.model.Product
 import com.example.shoppingcart.service.CartAPIService
 import com.example.shoppingcart.util.downloadFromUrl
 import com.example.shoppingcart.util.placeHolderProgressBar
+import com.example.shoppingcart.view.fragment.ProductDetailFragment
 
 
 class ProductAdapter(var products:ArrayList<Product>):RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
@@ -39,7 +39,7 @@ class ProductAdapter(var products:ArrayList<Product>):RecyclerView.Adapter<Produ
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         var currentProduct = products[position]
         holder.productImage.downloadFromUrl(
-            currentProduct.productImage[0],
+            currentProduct.productImage,
             placeHolderProgressBar(holder.productImage.context)) ///currentProduct.productImage
         holder.productTitle.text = currentProduct.productName
         holder.productPrice.text = "₺" + currentProduct.productPrice.toString()
@@ -51,12 +51,17 @@ class ProductAdapter(var products:ArrayList<Product>):RecyclerView.Adapter<Produ
             bundle.putString("productTitle", currentProduct.productName)
             bundle.putDouble("productPrice", currentProduct.productPrice)
             bundle.putString("productDescription", currentProduct.productDescription)
-            bundle.putInt("productImage", R.drawable.shopping_cart_48px)  ///currentProduct.productImage
+            bundle.putString("productImage", currentProduct.productImage)
+            bundle.putInt("productID", currentProduct.productID)
+            bundle.putSerializable("product", currentProduct)
+
             val productDetailFragment = ProductDetailFragment()
             productDetailFragment.arguments = bundle
             val fragmentManager = (holder.itemView.context as FragmentActivity).supportFragmentManager
             if (fragmentManager != null) {
-                fragmentManager.beginTransaction().replace(R.id.frameLayout, productDetailFragment).addToBackStack(null).commit()
+                fragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                    .replace(R.id.frameLayout, productDetailFragment).addToBackStack(null).commit()
             }
         }
     }

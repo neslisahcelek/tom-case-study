@@ -20,7 +20,7 @@ interface CartAPI {
     @POST("/cart")
     fun addItemToCart(item: Item): Single<Item>
     @POST("/cart")
-    fun addProductToCart(product: Product): Single<Product>
+    fun addProductToCart(product:Product): Single<Product>
     @POST("/cart/1/coupons")
     fun addCouponToCart(coupon: Coupon): Single<Coupon>
     @GET("/coupon")

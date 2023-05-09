@@ -13,6 +13,7 @@
             <item name="colorSecondary">@color/colorSecondary</item>
             <!-- Floating Action Button (FAB) rengi -->
             <item name="colorAccent">@color/colorAccent</item>
+            <item name="colorControlHighlight">#80FFFFFF</item>
 </style>
 
 </resources>

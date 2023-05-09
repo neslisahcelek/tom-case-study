@@ -40,13 +40,15 @@ class CouponsViewModel(application: Application): BaseViewModel(application){
         getDataFromAPI()
     }
     private fun getDataFromSQLite() {
-        //productLoading.value = true
+        couponsLoading.value = true
         launch {
             val coupons = CartDatabase(getApplication()).productDao().getAllCoupons()
             showCoupons(coupons)
         }
     }
     private fun getDataFromAPI() {
+        couponsLoading.value = true
+
         disposable.add(
             cartApiService.getCoupons()
                 .subscribeOn(Schedulers.newThread())
@@ -74,6 +76,7 @@ class CouponsViewModel(application: Application): BaseViewModel(application){
     private fun storeInSQLite(couponList: List<Coupon>) {
         launch {
             val dao = CartDatabase(getApplication()).productDao()
+            dao.deleteAllCoupons()
 
             val listLong = dao.insertAllCoupons(*couponList.toTypedArray())
             var i = 0

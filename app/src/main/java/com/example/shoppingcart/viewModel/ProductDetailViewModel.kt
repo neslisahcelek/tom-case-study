@@ -18,7 +18,7 @@ class ProductDetailViewModel(application: Application): BaseViewModel(applicatio
     val productLiveData = MutableLiveData<Product>()
 
     fun getDataFromRoom(uuid: Int){
-        val product1 = Product(1, "cheese", 80.0, "desc", MockData.mockCategory.category1, java.util.ArrayList<String>())
+        val product1 = Product(1, "cheese", 80.0, "desc", MockData.mockCategory.category1, MockData.MockProduct.image)
         productLiveData.value = product1
 
         launch{
