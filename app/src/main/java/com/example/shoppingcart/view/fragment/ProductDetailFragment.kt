@@ -18,8 +18,9 @@ import com.example.shoppingcart.viewModel.ProductListViewModel
 
 
 class ProductDetailFragment: Fragment() {
-    private lateinit var viewModel: ProductDetailViewModel
     private lateinit var binding: FragmentProductDetailBinding
+    private lateinit var viewModel: ProductDetailViewModel
+    private var productUuid = 0
 
     companion object {
         fun newInstance(title: String, imageResource: Int, price: String): ProductDetailFragment {
@@ -66,26 +67,30 @@ class ProductDetailFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel= ViewModelProvider(this).get(ProductDetailViewModel::class.java)
-        viewModel.getDataFromRoom()
-        observeLiveData()
+
         /*arguments?.let {
             val safeArgs = ProductDetailFragmentArgs.fromBundle(it)
             val productTitle = safeArgs.productTitle
             val productImage = safeArgs.productImage
             val productPrice = safeArgs.productPrice
             val productDescription = safeArgs.productDescription
+            val uuid = safeArgs.productUuid
         }
+        //viewModel.getDataFromRoom(uuid)
+        //observeLiveData()
          */
     }
     private fun observeLiveData() {
-        viewModel.productLiveData.observe(viewLifecycleOwner, { product ->
+        viewModel.productLiveData.observe(viewLifecycleOwner) { product ->
             product?.let {
-               // binding.imageViewDetail.downloadFromUrl(product.productImage[0], placeHolderProgressBar(binding.imageViewDetail.context))
+                context?.let { it1 -> placeHolderProgressBar(it1) }?.let { it2 ->
+                    binding.imageViewDetail.downloadFromUrl(product.productImage[0], it2)
+                }
                 binding.textViewDetailProductName.text = product.productName
                 binding.textViewDetailProductPrice.text = product.productPrice.toString()
                 binding.textViewDetailProductDescription.text = product.productDescription
             }
-        })
+        }
     }
 
     fun addToCart(view:View) { //add product to shopping cart

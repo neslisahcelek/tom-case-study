@@ -1,5 +1,7 @@
 package com.example.shoppingcart.service
 
+import com.example.shoppingcart.model.Coupon
+import com.example.shoppingcart.model.Item
 import com.example.shoppingcart.model.Product
 import io.reactivex.Single
 import retrofit2.Retrofit
@@ -17,5 +19,11 @@ class CartAPIService {
 
     fun getProducts():Single<List<Product>>{
         return api.getProducts()
+    }
+    fun getCartItems():Single<List<Item>>{
+        return api.getCartItems()
+    }
+    fun getCoupons():Single<List<Coupon>>{
+        return api.getCoupons()
     }
 }

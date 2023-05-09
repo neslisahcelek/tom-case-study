@@ -1,6 +1,89 @@
 package com.example.shoppingcart.viewModel
 
+import android.app.Application
+import android.content.ContentValues
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.shoppingcart.model.Coupon
+import com.example.shoppingcart.model.MockData
+import com.example.shoppingcart.model.Product
+import com.example.shoppingcart.service.CartAPIService
+import com.example.shoppingcart.service.CartDatabase
+import com.example.shoppingcart.util.CustomSharedPreferences
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 
-class CouponsViewModel: ViewModel(){
+class CouponsViewModel(application: Application): BaseViewModel(application){
+    private val cartApiService = CartAPIService()
+    private val disposable = CompositeDisposable()
+    var customSharedPreferences = CustomSharedPreferences(getApplication())
+    private var refreshTime = 10 * 60 * 1000 * 1000 * 1000L
+
+    val coupons = MutableLiveData<List<Coupon>>() //MutableLiveData<Single<List<Coupon>>>()
+
+    fun refreshData() {
+/*      val updateTime=customSharedPreferences?.getTime()
+        if (updateTime != null && updateTime != 0L && System.nanoTime() - updateTime < refreshTime) {
+            getDataFromSQLite()
+        } else {
+            getDataFromAPI()
+        }
+ */
+        coupons.value = MockData.MockCoupon.couponList //cartApiService.getProducts()//
+    }
+    fun refreshFromAPI() {
+        getDataFromAPI()
+    }
+    private fun getDataFromSQLite() {
+        //productLoading.value = true
+        launch {
+            val coupons = CartDatabase(getApplication()).productDao().getAllCoupons()
+            showCoupons(coupons)
+        }
+    }
+    private fun getDataFromAPI() {
+        disposable.add(
+            cartApiService.getCoupons()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableSingleObserver<List<Coupon>>() {
+                    override fun onSuccess(t: List<Coupon>) {
+                        storeInSQLite(t)
+                        Log.d(ContentValues.TAG, "getcouponsFromAPI")
+                    }
+
+                    override fun onError(e: Throwable) {
+                        e.printStackTrace()
+                    }
+                })
+        )
+    }
+    private fun showCoupons(couponList: List<Coupon>) {
+        coupons.value = couponList
+    }
+
+    private fun storeInSQLite(couponList: List<Coupon>) {
+        launch {
+            val dao = CartDatabase(getApplication()).productDao()
+
+            val listLong = dao.insertAllCoupons(*couponList.toTypedArray())
+            var i = 0
+            while (i < couponList.size) {
+                couponList[i].uuid = listLong[i].toInt()
+                i = i + 1
+            }
+            showCoupons(couponList)
+        }
+
+        customSharedPreferences?.saveTime(System.nanoTime())
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable.clear()
+    }
 }

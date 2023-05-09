@@ -14,7 +14,7 @@ import com.example.shoppingcart.model.Cart
 import com.example.shoppingcart.model.Item
 import com.example.shoppingcart.model.MockData
 
-class CartProductAdapter (public var cartItems:ArrayList<Item>): RecyclerView.Adapter<CartProductAdapter.CartProductViewHolder>(){
+class CartProductAdapter (var cartItems:ArrayList<Item>): RecyclerView.Adapter<CartProductAdapter.CartProductViewHolder>(){
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

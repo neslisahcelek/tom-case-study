@@ -1,6 +1,7 @@
 package com.example.shoppingcart.viewModel
 
 import android.app.Application
+import android.content.ContentValues.TAG
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.shoppingcart.model.MockData
@@ -15,21 +16,42 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
 import android.content.SharedPreferences
+import android.util.Log
+import com.example.shoppingcart.service.CartAPI
+import io.reactivex.Single
+import kotlin.math.log
 
 class ProductListViewModel(application: Application): BaseViewModel(application) {
     private val cartApiService = CartAPIService()
     private val disposable = CompositeDisposable()
     var customSharedPreferences = CustomSharedPreferences(getApplication())
+    private var refreshTime = 10 * 60 * 1000 * 1000 * 1000L
 
-    val products = MutableLiveData<List<Product>>()
+    val products = MutableLiveData<List<Product>>() //MutableLiveData<Single<List<Product>>>()
     val productError = MutableLiveData<Boolean>()
     val productLoading = MutableLiveData<Boolean>()
 
     fun refreshData() {
-        products.value = MockData.MockProductList.productList
-        //getDataFromAPI()
+/*      val updateTime=customSharedPreferences?.getTime()
+        if (updateTime != null && updateTime != 0L && System.nanoTime() - updateTime < refreshTime) {
+            getDataFromSQLite()
+        } else {
+            getDataFromAPI()
+        }
+ */
+       products.value = MockData.MockProductList.productList //cartApiService.getProducts()//
     }
-
+    fun refreshFromAPI() {
+        getDataFromAPI()
+    }
+    private fun getDataFromSQLite() {
+        productLoading.value = true
+        launch {
+            val products = CartDatabase(getApplication()).productDao().getAllProducts()
+            showProducts(products)
+            Log.d(TAG, "getDataFromSQLite")
+        }
+    }
     private fun getDataFromAPI() {
         productLoading.value = true
 
@@ -40,6 +62,7 @@ class ProductListViewModel(application: Application): BaseViewModel(application)
                 .subscribeWith(object : DisposableSingleObserver<List<Product>>() {
                     override fun onSuccess(t: List<Product>) {
                         storeInSQLite(t)
+                        Log.d(TAG, "getDataFromAPI")
                     }
 
                     override fun onError(e: Throwable) {

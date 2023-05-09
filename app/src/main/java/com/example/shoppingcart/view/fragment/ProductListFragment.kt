@@ -52,12 +52,13 @@ class ProductListFragment : Fragment() {
         val errorText:TextView = view?.findViewById(R.id.itemListError) ?: return
         val loadBar:ProgressBar = view?.findViewById(R.id.itemListLoading) ?: return
         val refresh: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshItemList)
+
         refresh.setOnRefreshListener {
             recyclerView.visibility = View.GONE
             errorText.visibility = View.GONE
             loadBar.visibility = View.VISIBLE
             refresh.isRefreshing = false
-            viewModel.refreshData()
+            viewModel.refreshFromAPI()
             refresh.isRefreshing = false
         }
         observeLiveData()
