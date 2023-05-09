@@ -68,23 +68,17 @@ class ProductAdapter(var products:ArrayList<Product>):RecyclerView.Adapter<Produ
         if (shoppingCart.items.isEmpty()){
             var cartItem: Item = Item(1, product, 1, 1, product.productPrice)
             shoppingCart.items.add(cartItem)
-            cartItem.subtotal = cartItem.quantity * cartItem.product!!.productPrice
-            shoppingCart.totalPrice = cartItem.subtotal
             Log.println(Log.INFO, TAG, "Product added to empty cart" + product.productName)
             return
         }
         for (item in shoppingCart.items) {
             if (item.product?.productID == product.productID) {
                 item.quantity++
-                item.subtotal = item.quantity * item.product!!.productPrice
-                shoppingCart.totalPrice += item.subtotal
                 Log.println(Log.INFO, TAG, "Product increase" + product.productName)
                 return
             } else {
                 var cartItem: Item = Item(2, product, 1, 1, product.productPrice)
                 shoppingCart.items.add(cartItem)
-                item.subtotal = item.quantity * item.product!!.productPrice
-                shoppingCart.totalPrice += item.subtotal
                 Log.println(Log.INFO, TAG, "Product added to cart" + product.productName)
                 return
             }

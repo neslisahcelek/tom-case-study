@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shoppingcart.*
+import com.example.shoppingcart.R
 import com.example.shoppingcart.adapter.CartProductAdapter
 import com.example.shoppingcart.model.MockData
 import com.example.shoppingcart.service.CartAPIService
@@ -19,19 +20,16 @@ class CartFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        (activity as AppCompatActivity?)!!.supportActionBar?.setTitle("Cart")
+        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_cart, container, false)
 
-        val total:TextView = view.findViewById(R.id.textViewTotalPrice)
-        total.text = "Total Price: ₺" + MockData.MockCart.cart.totalPrice
-        //total.text = "Total Price: ₺" + cartApiService.getCart().totalPrice.toString()
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerViewCart)
         recyclerView.setHasFixedSize(true)
@@ -41,6 +39,17 @@ class CartFragment : Fragment() {
         val adapter = CartProductAdapter(MockData.MockCart.cart.items) //all products in shopping cart from database
         recyclerView.adapter = adapter
 
+
+        var total: TextView = view.findViewById(R.id.textViewTotal)
+        total.text =  "Total: ₺" + MockData.MockCart.cart.totalPrice
+        //total.text = "Total Price: ₺" + cartApiService.getCart().totalPrice.toString()
+
+
+        var discount: TextView = view.findViewById(R.id.textViewDiscount)
+        discount.text = "Discount: ₺" + (MockData.MockCart.cart.finalPrice - MockData.MockCart.cart.totalPrice).toString()
+        //cartApiService.getCart().coupon.value.toString()
+        var finalPrice: TextView = view.findViewById(R.id.textViewFinalPrice)
+        finalPrice.text = "Final Price: ₺" + MockData.MockCart.cart.finalPrice
 
         return view
     }

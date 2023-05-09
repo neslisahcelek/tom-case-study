@@ -33,6 +33,8 @@ class CartProductAdapter (var cartItems:ArrayList<Item>): RecyclerView.Adapter<C
         holder.productTitle.text = currentItem.product?.productName ?: "Product Name"
         holder.productPrice.text = "₺" + currentItem.subtotal.toString()
         holder.productQuantity.text = currentItem.quantity.toString()
+
+
         holder.decreaseButton.setOnClickListener {
             Log.println(Log.INFO, ContentValues.TAG, "decrease button clicked")
             changeQuantity(currentItem, MockData.MockCart.cart, false)
@@ -59,7 +61,6 @@ class CartProductAdapter (var cartItems:ArrayList<Item>): RecyclerView.Adapter<C
                     return
                 }
             }
-            item.subtotal = item.quantity * item.product!!.productPrice
             Log.println(Log.INFO, ContentValues.TAG, "subtotal changed" + item.subtotal)
             return
         }
