@@ -11,9 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingcart.*
 import com.example.shoppingcart.adapter.CartProductAdapter
 import com.example.shoppingcart.model.MockData
+import com.example.shoppingcart.service.CartAPIService
 
 
 class CartFragment : Fragment() {
+    private val cartApiService = CartAPIService()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,7 +30,8 @@ class CartFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_cart, container, false)
 
         val total:TextView = view.findViewById(R.id.textViewTotalPrice)
-        total.text = "Total Price: ₺" + MockData.MockCart.cart.totalPrice.toString()
+        total.text = "Total Price: ₺" + MockData.MockCart.cart.totalPrice
+        //total.text = "Total Price: ₺" + cartApiService.getCart().totalPrice.toString()
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerViewCart)
         recyclerView.setHasFixedSize(true)

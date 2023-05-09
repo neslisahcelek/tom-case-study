@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.fragment.CouponsFragment">
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshCoupons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.CouponsFragment">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/couponsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.fragment.CouponsFragment">
+
 
     <ScrollView
+        android:id="@+id/couponscrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingStart="8dp"
@@ -18,6 +29,25 @@
             android:layout_height="match_parent"
             />
     </ScrollView>
-
-
-</FrameLayout>
+        <TextView
+            android:id="@+id/couponsError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Try again!"
+            app:layout_constraintBottom_toBottomOf="@+id/couponscrollview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        </TextView>
+        <ProgressBar
+            android:id="@+id/couponsLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/couponscrollview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        </ProgressBar>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

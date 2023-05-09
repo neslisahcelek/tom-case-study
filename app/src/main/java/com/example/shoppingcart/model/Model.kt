@@ -13,7 +13,7 @@ data class Product(
     @SerializedName("title")
     var productName: String,
     @SerializedName("price")
-    var productPrice: Int,
+    var productPrice: Double,
     @SerializedName("description")
     var productDescription: String,
     @SerializedName("category")
@@ -49,7 +49,7 @@ data class Item (
     var product: Product?,
     val cartID: Int,
     var quantity: Int,
-    var subtotal: Int
+    var subtotal: Double = quantity * (product?.productPrice ?: 0.0)
 ){
     @PrimaryKey(autoGenerate = true)
     var uuid: Int = 0
@@ -60,8 +60,9 @@ data class Cart(
     @SerializedName("products")
     var items: ArrayList<Item>,
     var coupon: Coupon?,
-    var totalPrice: Int=0,
-    var finalPrice: Int=0,
+    var totalPrice: Double= 0.0,
+    @SerializedName("finalValue")
+    var finalPrice: Double=0.0,
     @SerializedName("userId")
     var userID:Int?,
     @SerializedName("date")
@@ -69,4 +70,15 @@ data class Cart(
 ){
     @PrimaryKey(autoGenerate = true)
     var uuid: Int = 0
+    init {
+        calculateTotalPrice()
+    }
+    private fun calculateTotalPrice() {
+        var totalPrice = 0.0
+        for (item in items) {
+            totalPrice += item.subtotal
+        }
+        this.totalPrice = totalPrice
+    }
+
 }

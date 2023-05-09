@@ -18,11 +18,14 @@ import com.example.shoppingcart.model.Item
 import com.example.shoppingcart.view.fragment.ProductDetailFragment
 import com.example.shoppingcart.model.MockData
 import com.example.shoppingcart.model.Product
+import com.example.shoppingcart.service.CartAPIService
 import com.example.shoppingcart.util.downloadFromUrl
 import com.example.shoppingcart.util.placeHolderProgressBar
 
 
 class ProductAdapter(var products:ArrayList<Product>):RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
+    private val cartApiService = CartAPIService()
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -46,7 +49,7 @@ class ProductAdapter(var products:ArrayList<Product>):RecyclerView.Adapter<Produ
         holder.cardView.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("productTitle", currentProduct.productName)
-            bundle.putInt("productPrice", currentProduct.productPrice)
+            bundle.putDouble("productPrice", currentProduct.productPrice)
             bundle.putString("productDescription", currentProduct.productDescription)
             bundle.putInt("productImage", R.drawable.shopping_cart_48px)  ///currentProduct.productImage
             val productDetailFragment = ProductDetailFragment()
@@ -58,9 +61,15 @@ class ProductAdapter(var products:ArrayList<Product>):RecyclerView.Adapter<Produ
         }
     }
     fun addToCart(product: Product, shoppingCart: Cart) { //add product to shopping cart
+        /* var item:Item = Item(1, currentProduct, 1, 1, currentProduct.productPrice)
+           cartApiService.addItemToCart(item)
+           cartApiService.addProductToCart(product)
+           */
         if (shoppingCart.items.isEmpty()){
             var cartItem: Item = Item(1, product, 1, 1, product.productPrice)
             shoppingCart.items.add(cartItem)
+            cartItem.subtotal = cartItem.quantity * cartItem.product!!.productPrice
+            shoppingCart.totalPrice = cartItem.subtotal
             Log.println(Log.INFO, TAG, "Product added to empty cart" + product.productName)
             return
         }
@@ -68,12 +77,14 @@ class ProductAdapter(var products:ArrayList<Product>):RecyclerView.Adapter<Produ
             if (item.product?.productID == product.productID) {
                 item.quantity++
                 item.subtotal = item.quantity * item.product!!.productPrice
+                shoppingCart.totalPrice += item.subtotal
                 Log.println(Log.INFO, TAG, "Product increase" + product.productName)
                 return
             } else {
-                var cartItem: Item = Item(1, product, 1, 1, product.productPrice)
+                var cartItem: Item = Item(2, product, 1, 1, product.productPrice)
                 shoppingCart.items.add(cartItem)
-                println("Product added to cart" + product.productName)
+                item.subtotal = item.quantity * item.product!!.productPrice
+                shoppingCart.totalPrice += item.subtotal
                 Log.println(Log.INFO, TAG, "Product added to cart" + product.productName)
                 return
             }

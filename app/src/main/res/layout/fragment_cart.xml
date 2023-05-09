@@ -27,6 +27,7 @@
         android:orientation="vertical"
       >
 
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cartSummaryCardView"
             android:layout_gravity="center"

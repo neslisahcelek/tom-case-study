@@ -39,4 +39,6 @@ interface CartDao {
     @Query("SELECT * FROM coupon")
     suspend fun getAllCoupons(): List<Coupon>
 
+
+
 }

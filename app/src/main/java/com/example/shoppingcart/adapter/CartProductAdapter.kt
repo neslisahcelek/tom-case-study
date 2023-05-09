@@ -13,9 +13,11 @@ import com.example.shoppingcart.*
 import com.example.shoppingcart.model.Cart
 import com.example.shoppingcart.model.Item
 import com.example.shoppingcart.model.MockData
+import com.example.shoppingcart.service.CartAPIService
+import com.example.shoppingcart.view.fragment.CartFragment
 
 class CartProductAdapter (var cartItems:ArrayList<Item>): RecyclerView.Adapter<CartProductAdapter.CartProductViewHolder>(){
-
+    var cartApiService: CartAPIService = CartAPIService()
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -36,6 +38,8 @@ class CartProductAdapter (var cartItems:ArrayList<Item>): RecyclerView.Adapter<C
             changeQuantity(currentItem, MockData.MockCart.cart, false)
             holder.productQuantity.text = currentItem.quantity.toString()
             holder.productPrice.text = "₺" + currentItem.subtotal.toString()
+           // cartApiService.changeQuantity(currentItem)
+
         }
         holder.increaseButton.setOnClickListener {
             changeQuantity(currentItem, MockData.MockCart.cart, true)

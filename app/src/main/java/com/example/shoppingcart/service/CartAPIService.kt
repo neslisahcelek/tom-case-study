@@ -1,5 +1,6 @@
 package com.example.shoppingcart.service
 
+import com.example.shoppingcart.model.Cart
 import com.example.shoppingcart.model.Coupon
 import com.example.shoppingcart.model.Item
 import com.example.shoppingcart.model.Product
@@ -23,7 +24,24 @@ class CartAPIService {
     fun getCartItems():Single<List<Item>>{
         return api.getCartItems()
     }
+    fun getCart():Cart{
+        return api.getCart()
+    }
+    fun addItemToCart(item: Item):Single<Item>{
+        return api.addItemToCart(item)
+    }
+    fun addProductToCart(product: Product):Single<Product>{
+        return api.addProductToCart(product)
+    }
+    fun addCouponToCart(coupon: Coupon):Single<Coupon>{
+        return api.addCouponToCart(coupon)
+    }
+
     fun getCoupons():Single<List<Coupon>>{
         return api.getCoupons()
+    }
+
+    fun changeQuantity(currentItem: Item) {
+
     }
 }

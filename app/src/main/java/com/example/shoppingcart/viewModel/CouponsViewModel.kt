@@ -24,7 +24,8 @@ class CouponsViewModel(application: Application): BaseViewModel(application){
     private var refreshTime = 10 * 60 * 1000 * 1000 * 1000L
 
     val coupons = MutableLiveData<List<Coupon>>() //MutableLiveData<Single<List<Coupon>>>()
-
+    val couponsError = MutableLiveData<Boolean>()
+    val couponsLoading = MutableLiveData<Boolean>()
     fun refreshData() {
 /*      val updateTime=customSharedPreferences?.getTime()
         if (updateTime != null && updateTime != 0L && System.nanoTime() - updateTime < refreshTime) {
@@ -57,6 +58,8 @@ class CouponsViewModel(application: Application): BaseViewModel(application){
                     }
 
                     override fun onError(e: Throwable) {
+                        couponsError.value = true
+                        couponsLoading.value = false
                         e.printStackTrace()
                     }
                 })
@@ -64,6 +67,8 @@ class CouponsViewModel(application: Application): BaseViewModel(application){
     }
     private fun showCoupons(couponList: List<Coupon>) {
         coupons.value = couponList
+        couponsError.value = false
+        couponsLoading.value = false
     }
 
     private fun storeInSQLite(couponList: List<Coupon>) {
