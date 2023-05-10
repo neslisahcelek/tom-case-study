@@ -61,7 +61,10 @@ class ProductListFragment : Fragment() {
             errorText.visibility = View.GONE
             loadBar.visibility = View.VISIBLE
             refresh.isRefreshing = false
+            viewModel.refreshData()
         }
+
+
         observeLiveData()
         //adapter?.notifyDataSetChanged()
     }
