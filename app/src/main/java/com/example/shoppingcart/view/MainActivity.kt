@@ -1,13 +1,27 @@
 package com.example.shoppingcart.view
 
+import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.util.LogPrinter
 import androidx.fragment.app.Fragment
 import com.example.shoppingcart.R
 import com.example.shoppingcart.databinding.ActivityMainBinding
+import com.example.shoppingcart.model.Cart
+import com.example.shoppingcart.model.Item
+import com.example.shoppingcart.model.MockData
+import com.example.shoppingcart.service.CartAPIService
+import com.example.shoppingcart.service.CartDatabase
+import com.example.shoppingcart.util.CustomSharedPreferences
 import com.example.shoppingcart.view.fragment.CartFragment
 import com.example.shoppingcart.view.fragment.CouponsFragment
 import com.example.shoppingcart.view.fragment.ProductListFragment
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {

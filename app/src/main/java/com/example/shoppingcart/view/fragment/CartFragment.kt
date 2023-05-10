@@ -36,18 +36,24 @@ class CartFragment : Fragment() {
         recyclerView.layoutManager = GridLayoutManager(this.context,1,
             GridLayoutManager.VERTICAL, false)
 
-        val adapter = CartProductAdapter(MockData.MockCart.cart.items) //all products in shopping cart from database
+        val adapter =
+            MockData.MockCart.cart.items?.let { CartProductAdapter(it) } //all products in shopping cart from database
         recyclerView.adapter = adapter
 
 
         var total: TextView = view.findViewById(R.id.textViewTotal)
         total.text =  "Total: ₺" + MockData.MockCart.cart.totalPrice
-        //total.text = "Total Price: ₺" + cartApiService.getCart().totalPrice.toString()
-
+        //total.text = "Total Price: ₺" + cartApiService.getCart().totalPrice.toString(
 
         var discount: TextView = view.findViewById(R.id.textViewDiscount)
-        discount.text = "Discount: ₺" + (MockData.MockCart.cart.finalPrice - MockData.MockCart.cart.totalPrice).toString()
-        //cartApiService.getCart().coupon.value.toString()
+        if (MockData.MockCart.cart.coupon == null){
+            discount.text = "Discount: ₺0"
+        }
+        else{
+            discount.text = "Discount: ₺" + MockData.MockCart.cart.coupon?.amount.toString()
+            //cartApiService.getCart().coupon.value.toString()
+        }
+
         var finalPrice: TextView = view.findViewById(R.id.textViewFinalPrice)
         finalPrice.text = "Final Price: ₺" + MockData.MockCart.cart.finalPrice
 

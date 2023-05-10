@@ -4,10 +4,8 @@ import android.app.Application
 import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.shoppingcart.model.Item
 import com.example.shoppingcart.model.MockData
-import com.example.shoppingcart.model.Product
 import com.example.shoppingcart.service.CartAPIService
 import com.example.shoppingcart.service.CartDatabase
 import com.example.shoppingcart.util.CustomSharedPreferences
@@ -16,6 +14,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class CartViewModel(application: Application): BaseViewModel(application) {
     private val cartApiService = CartAPIService()
@@ -34,14 +33,14 @@ class CartViewModel(application: Application): BaseViewModel(application) {
             getDataFromAPI()
         }
  */
-        items.value = MockData.MockCart.cartProductList //cartApiService.getCartItems(
+        items.value = MockData.MockCart.cartItemList //cartApiService.getCartItems(
     }
     fun refreshFromAPI() {
         getDataFromAPI()
     }
     private fun getDataFromSQLite() {
         launch {
-            val items = CartDatabase(getApplication()).productDao().getItemsFromShoppingCart()
+            val items = CartDatabase(getApplication()).ItemDao().getItemsFromShoppingCart()
             showItems(items)
             Log.d(ContentValues.TAG, "getitemsFromSQLite")
         }
@@ -51,9 +50,10 @@ class CartViewModel(application: Application): BaseViewModel(application) {
             cartApiService.getCartItems()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<List<Item>>() {
-                    override fun onSuccess(t: List<Item>) {
-                        storeInSQLite(t)
+                .subscribeWith(object : DisposableSingleObserver<Response<List<Item>>>() {
+
+                    override fun onSuccess(t: Response<List<Item>>) {
+                        //storeInSQLite(t)
                         Log.d(ContentValues.TAG, "getitemsFromAPI")
                     }
 
@@ -69,7 +69,7 @@ class CartViewModel(application: Application): BaseViewModel(application) {
     }
     private fun storeInSQLite(itemList: List<Item>) {
         launch {
-            val dao = CartDatabase(getApplication()).productDao()
+            val dao = CartDatabase(getApplication()).ItemDao()
 
             val listLong = dao.insertAllItems(*itemList.toTypedArray())
             var i = 0

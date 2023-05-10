@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.shoppingcart.*
 import com.example.shoppingcart.adapter.ProductAdapter
+import com.example.shoppingcart.model.Item
 import com.example.shoppingcart.view.MainActivity
 import com.example.shoppingcart.viewModel.ProductListViewModel
 
@@ -72,11 +73,11 @@ class ProductListFragment : Fragment() {
         val loadBar:ProgressBar = view?.findViewById(R.id.itemListLoading) ?: return
 
         viewModel.products.observe(viewLifecycleOwner, Observer {
-            products -> products?.let {
+            items:List<Item> -> items?.let {
             errorText.visibility = View.GONE
             loadBar.visibility = View.GONE
             recyclerView.visibility = View.VISIBLE
-            productAdapter.updateProductList(products)
+            productAdapter.updateProductList(items)
             }
         })
         viewModel.productError.observe(viewLifecycleOwner, Observer {

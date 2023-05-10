@@ -2,28 +2,23 @@ package com.example.shoppingcart.viewModel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.shoppingcart.model.MockData
-import com.example.shoppingcart.model.Product
-import com.example.shoppingcart.service.CartAPIService
+import com.example.shoppingcart.model.Item
 import com.example.shoppingcart.service.CartDatabase
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableSingleObserver
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
-import java.util.UUID
+import java.util.*
 
 class ProductDetailViewModel(application: Application): BaseViewModel(application){
-    val productLiveData = MutableLiveData<Product>()
+    val productLiveData = MutableLiveData<Item>()
 
     fun getDataFromRoom(uuid: Int){
-        val product1 = Product(1, "cheese", 80.0, "desc", MockData.mockCategory.category1, MockData.MockProduct.image)
-        productLiveData.value = product1
+        var Item1:Item = Item("1","Item 1","https://picsum.photos/200/300",10.0,1,"technology","Item 1 description",
+            Calendar.getInstance().time,
+            Calendar.getInstance().time)
+        productLiveData.value = Item1
 
         launch{
-            val dao = CartDatabase(getApplication()).productDao()
-            val product = dao.getProductById(uuid)
+            val dao = CartDatabase(getApplication()).ItemDao()
+            val product = dao.getItemById(uuid)
             productLiveData.value = product
         }
     }

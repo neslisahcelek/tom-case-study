@@ -6,22 +6,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
-import com.example.shoppingcart.R
 import com.example.shoppingcart.databinding.FragmentProductDetailBinding
 import com.example.shoppingcart.model.Item
 import com.example.shoppingcart.model.MockData
-import com.example.shoppingcart.model.Product
 import com.example.shoppingcart.service.CartAPIService
 import com.example.shoppingcart.util.downloadFromUrl
 import com.example.shoppingcart.util.placeHolderProgressBar
 import com.example.shoppingcart.viewModel.ProductDetailViewModel
-import com.example.shoppingcart.viewModel.ProductListViewModel
 
 
 class ProductDetailFragment: Fragment() {
@@ -31,10 +25,10 @@ class ProductDetailFragment: Fragment() {
     private val cartApiService = CartAPIService()
 
     companion object {
-        fun newInstance(title: String, imageResource: Int, price: String,product:Product): ProductDetailFragment {
+        fun newInstance(title: String, imageResource: Int, price: String,product:Item): ProductDetailFragment {
             val args = Bundle()
             args.putSerializable("product", product)
-            args.putInt("productID", product.productID)
+            args.putString("productID", product.ItemID)
             args.putString("productTitle", title)
             args.putInt("productImage", imageResource)
             args.putString("productPrice", price)
@@ -56,8 +50,8 @@ class ProductDetailFragment: Fragment() {
         val productImage = arguments?.getString("productImage")
         val productPrice = arguments?.getDouble("productPrice")
         val productDescription = arguments?.getString("productDescription")
-        val productId = arguments?.getInt("productID")
-        val currentProduct = arguments?.getSerializable("product") as? Product
+        val productId = arguments?.getString("productID")
+        val currentProduct = arguments?.getSerializable("product") as? Item
 
         if (productImage != null) {
             context?.let { placeHolderProgressBar(it) }?.let {
@@ -102,35 +96,33 @@ class ProductDetailFragment: Fragment() {
          */
     }
     private fun observeLiveData() {
-        viewModel.productLiveData.observe(viewLifecycleOwner) { product ->
+        viewModel.productLiveData.observe(viewLifecycleOwner) { product:Item ->
             product?.let {
                 context?.let { it1 -> placeHolderProgressBar(it1) }?.let { it2 ->
-                    binding.imageViewDetail.downloadFromUrl(product.productImage, it2)
+                    binding.imageViewDetail.downloadFromUrl(product.ItemImage, it2)
                 }
-                binding.textViewDetailProductName.text = product.productName
-                binding.textViewDetailProductPrice.text = product.productPrice.toString()
-                binding.textViewDetailProductDescription.text = product.productDescription
+                binding.textViewDetailProductName.text = product.ItemName
+                binding.textViewDetailProductPrice.text = product.ItemPrice.toString()
+                binding.textViewDetailProductDescription.text = product.ItemDescription
             }
         }
     }
 
-    fun addToCart(product: Product) { //add product to shopping cart
+    fun addToCart(product: Item) { //add product to shopping cart
         var shoppingCart = MockData.MockCart.cart
-        if (shoppingCart.items.isEmpty()){
-            var cartItem: Item = Item(1, product, 1, 1, product.productPrice)
-            shoppingCart.items.add(cartItem)
-            Log.println(Log.INFO, ContentValues.TAG, "Product added to empty cart" + product.productName)
+        if (shoppingCart.items?.isEmpty() == true){
+            shoppingCart.items!!.add(product)
+            Log.println(Log.INFO, ContentValues.TAG, "Product added to empty cart" )
             return
         }
-        for (item in shoppingCart.items) {
-            if (item.product?.productID == product.productID) {
-                item.quantity++
-                Log.println(Log.INFO, ContentValues.TAG, "Product increase" + product.productName)
+        for (item in shoppingCart.items!!) {
+            if (item.ItemID == product.ItemID) {
+                product.quantity++
+                Log.println(Log.INFO, ContentValues.TAG, "Product increase" )
                 return
             } else {
-                var cartItem: Item = Item(2, product, 1, 1, product.productPrice)
-                shoppingCart.items.add(cartItem)
-                Log.println(Log.INFO, ContentValues.TAG, "Product added to cart" + product.productName)
+                shoppingCart.items!!.add(product)
+                Log.println(Log.INFO, ContentValues.TAG, "Product added to cart" )
                 return
             }
         }

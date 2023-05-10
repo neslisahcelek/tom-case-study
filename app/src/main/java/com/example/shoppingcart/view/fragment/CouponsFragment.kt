@@ -13,11 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.shoppingcart.adapter.CouponAdapter
 import com.example.shoppingcart.R
-import com.example.shoppingcart.model.MockData
+import com.example.shoppingcart.adapter.CouponAdapter
 import com.example.shoppingcart.viewModel.CouponsViewModel
-import com.example.shoppingcart.viewModel.ProductListViewModel
 
 class CouponsFragment : Fragment() {
     private lateinit var viewModel: CouponsViewModel

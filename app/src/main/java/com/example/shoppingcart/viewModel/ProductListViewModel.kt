@@ -1,25 +1,22 @@
 package com.example.shoppingcart.viewModel
 
 import android.app.Application
+import android.content.ContentValues
 import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.example.shoppingcart.model.Cart
+import com.example.shoppingcart.model.Item
 import com.example.shoppingcart.model.MockData
-import com.example.shoppingcart.model.Product
 import com.example.shoppingcart.service.CartAPIService
 import com.example.shoppingcart.service.CartDatabase
 import com.example.shoppingcart.util.CustomSharedPreferences
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
-import android.content.SharedPreferences
-import android.util.Log
-import com.example.shoppingcart.service.CartAPI
-import io.reactivex.Single
-import kotlin.math.log
+import retrofit2.Response
 
 class ProductListViewModel(application: Application): BaseViewModel(application) {
     private val cartApiService = CartAPIService()
@@ -27,7 +24,7 @@ class ProductListViewModel(application: Application): BaseViewModel(application)
     var customSharedPreferences = CustomSharedPreferences(getApplication())
     private var refreshTime = 10 * 60 * 1000 * 1000 * 1000L
 
-    val products = MutableLiveData<List<Product>>() //MutableLiveData<Single<List<Product>>>()
+    val products = MutableLiveData<List<Item>>() //MutableLiveData<Single<List<Product>>>()
     val productError = MutableLiveData<Boolean>()
     val productLoading = MutableLiveData<Boolean>()
 
@@ -39,7 +36,8 @@ class ProductListViewModel(application: Application): BaseViewModel(application)
             getDataFromAPI()
         }
  */
-       products.value = MockData.MockProductList.productList //cartApiService.getProducts()//
+       products.value = MockData.MockItemList.ItemList//cartApiService.getProducts()//
+        //getDataFromAPI()
     }
     fun refreshFromAPI() {
         getDataFromAPI()
@@ -47,20 +45,42 @@ class ProductListViewModel(application: Application): BaseViewModel(application)
     private fun getDataFromSQLite() {
         productLoading.value = true
         launch {
-            val products = CartDatabase(getApplication()).productDao().getAllProducts()
+            val products = CartDatabase(getApplication()).ItemDao().getAllItems()
             showProducts(products)
             Log.d(TAG, "getDataFromSQLite")
         }
     }
     private fun getDataFromAPI() {
-        productLoading.value = true
-
+        var cart:Cart = Cart("898998","88888", MockData.MockCart.cartItemList,MockData.MockCoupon.coupon1,0.0,0.0)
         disposable.add(
-            cartApiService.getProducts()
+            cartApiService.createCart(cart)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<List<Product>>() {
-                    override fun onSuccess(t: List<Product>) {
+                .subscribeWith(object : DisposableSingleObserver<Response<Cart>>() {
+
+                    override fun onSuccess(t: Response<Cart>) {
+                        if (t.body() != null){
+                            storeCartInSQLite(t.body()!!)
+                            MockData.MockCart.cart = t.body()!!
+                        }
+                        Log.d(TAG, "getDataFromAPI" + (t.body()?.cartID ?:0))
+                    }
+
+                    override fun onError(e: Throwable) {
+                        Log.d(TAG, "hata" + e.message.toString())
+                    }
+                })
+        )
+
+
+
+     productLoading.value = true
+        disposable.add(
+            cartApiService.getItems()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableSingleObserver<List<Item>>() {
+                    override fun onSuccess(t: List<Item>) {
                         storeInSQLite(t)
                         Log.d(TAG, "getDataFromAPI")
                     }
@@ -68,23 +88,32 @@ class ProductListViewModel(application: Application): BaseViewModel(application)
                     override fun onError(e: Throwable) {
                         productError.value = true
                         productLoading.value = false
-                        e.printStackTrace()
+                        Log.d(TAG, "error get data" + e.message.toString())
+
                     }
                 })
         )
     }
 
-    private fun showProducts(productList: List<Product>) {
+    private fun showProducts(productList: List<Item>) {
         products.value = productList
         productError.value = false
         productLoading.value = false
     }
-
-    private fun storeInSQLite(productList: List<Product>) {
+    private fun storeCartInSQLite(cart: Cart) {
         launch {
-            val dao = CartDatabase(getApplication()).productDao()
+            val dao = CartDatabase(getApplication()).ItemDao()
+            //dao.insertCart(cart)
+            customSharedPreferences?.saveTime(System.nanoTime())
+        }
+        Log.println(Log.INFO, ContentValues.TAG, "CART"  )
+    }
 
-            dao.deleteAllProducts()
+    private fun storeInSQLite(productList: List<Item>) {
+        launch {
+            val dao = CartDatabase(getApplication()).ItemDao()
+
+            dao.deleteAllItems()
 
             val listLong = dao.insertAll(*productList.toTypedArray())
             var i = 0

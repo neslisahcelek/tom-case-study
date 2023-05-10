@@ -4,10 +4,8 @@ import android.app.Application
 import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.shoppingcart.model.Coupon
 import com.example.shoppingcart.model.MockData
-import com.example.shoppingcart.model.Product
 import com.example.shoppingcart.service.CartAPIService
 import com.example.shoppingcart.service.CartDatabase
 import com.example.shoppingcart.util.CustomSharedPreferences
@@ -42,7 +40,7 @@ class CouponsViewModel(application: Application): BaseViewModel(application){
     private fun getDataFromSQLite() {
         couponsLoading.value = true
         launch {
-            val coupons = CartDatabase(getApplication()).productDao().getAllCoupons()
+            val coupons = CartDatabase(getApplication()).ItemDao().getAllCoupons()
             showCoupons(coupons)
         }
     }
@@ -75,7 +73,7 @@ class CouponsViewModel(application: Application): BaseViewModel(application){
 
     private fun storeInSQLite(couponList: List<Coupon>) {
         launch {
-            val dao = CartDatabase(getApplication()).productDao()
+            val dao = CartDatabase(getApplication()).ItemDao()
             dao.deleteAllCoupons()
 
             val listLong = dao.insertAllCoupons(*couponList.toTypedArray())
