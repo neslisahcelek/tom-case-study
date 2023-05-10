@@ -7,11 +7,10 @@ import androidx.room.RoomDatabase
 import com.example.shoppingcart.model.Cart
 import com.example.shoppingcart.model.Coupon
 import com.example.shoppingcart.model.Item
-import com.example.shoppingcart.model.Product
 
-@Database(entities = arrayOf(Product::class, Cart::class, Coupon::class, Item::class), version = 1)
+@Database(entities = arrayOf(Item::class, Cart::class, Coupon::class), version = 1)
 abstract class CartDatabase: RoomDatabase(){
-    abstract fun productDao(): CartDao
+    abstract fun ItemDao(): CartDao
 
     companion object{
         @Volatile private var INSTANCE: CartDatabase? = null

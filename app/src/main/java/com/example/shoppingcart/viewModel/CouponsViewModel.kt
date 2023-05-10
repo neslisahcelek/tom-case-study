@@ -35,7 +35,7 @@ class CouponsViewModel(application: Application): BaseViewModel(application){
         coupons.value = MockData.MockCoupon.couponList //cartApiService.getProducts()//
     }
     fun refreshFromAPI() {
-        getDataFromAPI()
+
     }
     private fun getDataFromSQLite() {
         couponsLoading.value = true

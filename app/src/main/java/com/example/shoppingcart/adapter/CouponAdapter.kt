@@ -1,17 +1,22 @@
 package com.example.shoppingcart.adapter
 
+import android.app.AlertDialog
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
+import com.example.shoppingcart.R
 import com.example.shoppingcart.model.Cart
 import com.example.shoppingcart.model.Coupon
-import com.example.shoppingcart.R
 import com.example.shoppingcart.model.MockData
-import com.example.shoppingcart.model.Product
 import com.example.shoppingcart.service.CartAPIService
+import com.example.shoppingcart.view.fragment.CartFragment
+import com.example.shoppingcart.view.fragment.CouponsFragment
 
 class CouponAdapter(private var coupons:ArrayList<Coupon>): RecyclerView.Adapter<CouponAdapter.CouponViewHolder>(){
     private val cartApiService = CartAPIService()
@@ -26,23 +31,25 @@ class CouponAdapter(private var coupons:ArrayList<Coupon>): RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: CouponViewHolder, position: Int) {
-        holder.couponDescription.text = coupons[position].couponDescription
+        holder.couponDescription.text = coupons[position].description
         holder.couponButton.setOnClickListener {
             addCouponToCart(coupons[position], MockData.MockCart.cart)
             //cartApiService.addCouponToCart(coupons[position])
         }
     }
     fun addCouponToCart(coupon: Coupon, shoppingCart: Cart) { //add product to shopping cart
+        if (shoppingCart.items?.isEmpty() == true){
+            /*val alert = AlertDialog.Builder()
+            alert.setMessage("Cart is empty, coupon can not applied.")
+
+             */
+            return
+        }
         shoppingCart.coupon = coupon
         var total = shoppingCart.totalPrice
-        var final:Double = total
-        when(coupon.discountType.replace(" ", "").lowercase()){
-            "ratio" -> {
-                final = (total - (total*coupon.value/100))
-            }
-            else -> {
-                final = (total - coupon.value)
-            }
+        var final: Double? = total
+        if (total != null) {
+            final = total - coupon.amount
         }
         shoppingCart.finalPrice = final
     }

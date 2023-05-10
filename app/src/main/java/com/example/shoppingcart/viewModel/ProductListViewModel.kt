@@ -39,9 +39,7 @@ class ProductListViewModel(application: Application): BaseViewModel(application)
        products.value = MockData.MockItemList.ItemList//cartApiService.getProducts()//
         //getDataFromAPI()
     }
-    fun refreshFromAPI() {
-        getDataFromAPI()
-    }
+
     private fun getDataFromSQLite() {
         productLoading.value = true
         launch {
@@ -71,9 +69,6 @@ class ProductListViewModel(application: Application): BaseViewModel(application)
                     }
                 })
         )
-
-
-
      productLoading.value = true
         disposable.add(
             cartApiService.getItems()

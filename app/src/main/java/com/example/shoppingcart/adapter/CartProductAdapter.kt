@@ -14,6 +14,8 @@ import com.example.shoppingcart.model.Cart
 import com.example.shoppingcart.model.Item
 import com.example.shoppingcart.model.MockData
 import com.example.shoppingcart.service.CartAPIService
+import com.example.shoppingcart.util.downloadFromUrl
+import com.example.shoppingcart.util.placeHolderProgressBar
 import com.example.shoppingcart.view.fragment.CartFragment
 
 class CartProductAdapter (var cartItems:ArrayList<Item>): RecyclerView.Adapter<CartProductAdapter.CartProductViewHolder>(){
@@ -29,40 +31,45 @@ class CartProductAdapter (var cartItems:ArrayList<Item>): RecyclerView.Adapter<C
 
     override fun onBindViewHolder(holder: CartProductViewHolder, position: Int) {
         val currentItem = cartItems[position]
-        currentItem.product?.let { holder.productImage.setImageResource(R.drawable.shopping_cart_48px) } ///////
-        holder.productTitle.text = currentItem.product?.productName ?: "Product Name"
-        holder.productPrice.text = "₺" + currentItem.subtotal.toString()
+        currentItem.let {
+            holder.productImage.downloadFromUrl(currentItem.ItemImage,
+                placeHolderProgressBar(holder.productImage.context)
+            ) } ///////
+        holder.productTitle.text = currentItem.ItemName ?: "Product Name"
+        holder.productPrice.text = "₺" + currentItem.ItemPrice * currentItem.quantity
         holder.productQuantity.text = currentItem.quantity.toString()
-
 
         holder.decreaseButton.setOnClickListener {
             Log.println(Log.INFO, ContentValues.TAG, "decrease button clicked")
             changeQuantity(currentItem, MockData.MockCart.cart, false)
             holder.productQuantity.text = currentItem.quantity.toString()
-            holder.productPrice.text = "₺" + currentItem.subtotal.toString()
-           // cartApiService.changeQuantity(currentItem)
+            holder.productPrice.text = "₺" + currentItem.ItemPrice * currentItem.quantity
 
+           // cartApiService.changeQuantity(currentItem)
         }
         holder.increaseButton.setOnClickListener {
             changeQuantity(currentItem, MockData.MockCart.cart, true)
             holder.productQuantity.text = currentItem.quantity.toString()
-            holder.productPrice.text = "₺" + currentItem.subtotal.toString()
+            holder.productPrice.text =  "₺" + currentItem.ItemPrice * currentItem.quantity
         }
     }
     fun changeQuantity(item: Item, shoppingCart: Cart, isIncrease: Boolean) { //add product to shopping cart
-        if (shoppingCart.items.contains(item)) {
+        if (shoppingCart.items?.contains(item) == true) {
             if (isIncrease) {
                 item.quantity = item.quantity + 1 //increase quantity
+                shoppingCart.totalPrice = shoppingCart.totalPrice?.plus(item.ItemPrice)
+
             } else {
                 item.quantity = item.quantity - 1 //decrease quantity
+                shoppingCart.totalPrice = shoppingCart.totalPrice?.minus(item.ItemPrice)
                 Log.println(Log.INFO, ContentValues.TAG, "quantity decreased" + item.quantity)
-                if (item.quantity == 0) { //if quantity is 0, remove item from cart
-                    shoppingCart.items.remove(item)
-                    return
-                }
             }
-            Log.println(Log.INFO, ContentValues.TAG, "subtotal changed" + item.subtotal)
-            return
+            if (item.quantity == 0) { //if quantity is 0, remove item from cart
+                shoppingCart.items!!.remove(item)
+                shoppingCart.totalPrice = shoppingCart.totalPrice?.plus(item.ItemPrice)
+                return
+            }
+            Log.println(Log.INFO, ContentValues.TAG, "subtotal changed")
         }
     }
     override fun getItemCount(): Int {

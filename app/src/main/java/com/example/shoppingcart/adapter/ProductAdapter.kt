@@ -16,14 +16,13 @@ import com.example.shoppingcart.R
 import com.example.shoppingcart.model.Cart
 import com.example.shoppingcart.model.Item
 import com.example.shoppingcart.model.MockData
-import com.example.shoppingcart.model.Product
 import com.example.shoppingcart.service.CartAPIService
 import com.example.shoppingcart.util.downloadFromUrl
 import com.example.shoppingcart.util.placeHolderProgressBar
 import com.example.shoppingcart.view.fragment.ProductDetailFragment
 
 
-class ProductAdapter(var products:ArrayList<Product>):RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
+class ProductAdapter(var products:ArrayList<Item>):RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
     private val cartApiService = CartAPIService()
 
     override fun onCreateViewHolder(
@@ -39,20 +38,20 @@ class ProductAdapter(var products:ArrayList<Product>):RecyclerView.Adapter<Produ
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         var currentProduct = products[position]
         holder.productImage.downloadFromUrl(
-            currentProduct.productImage,
+            currentProduct.ItemImage,
             placeHolderProgressBar(holder.productImage.context)) ///currentProduct.productImage
-        holder.productTitle.text = currentProduct.productName
-        holder.productPrice.text = "₺" + currentProduct.productPrice.toString()
+        holder.productTitle.text = currentProduct.ItemName
+        holder.productPrice.text = "₺" + currentProduct.ItemPrice.toString()
         holder.productButton.setOnClickListener {
             addToCart(currentProduct, MockData.MockCart.cart)
         }
         holder.cardView.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString("productTitle", currentProduct.productName)
-            bundle.putDouble("productPrice", currentProduct.productPrice)
-            bundle.putString("productDescription", currentProduct.productDescription)
-            bundle.putString("productImage", currentProduct.productImage)
-            bundle.putInt("productID", currentProduct.productID)
+            bundle.putString("productTitle", currentProduct.ItemName)
+            bundle.putDouble("productPrice", currentProduct.ItemPrice)
+            bundle.putString("productDescription", currentProduct.ItemDescription)
+            bundle.putString("productImage", currentProduct.ItemImage)
+            bundle.putString("productID", currentProduct.ItemID)
             bundle.putSerializable("product", currentProduct)
 
             val productDetailFragment = ProductDetailFragment()
@@ -65,29 +64,27 @@ class ProductAdapter(var products:ArrayList<Product>):RecyclerView.Adapter<Produ
             }
         }
     }
-    fun addToCart(product: Product, shoppingCart: Cart) { //add product to shopping cart
+    private fun addToCart(product: Item, shoppingCart: Cart) { //add product to shopping cart
         /* var item:Item = Item(1, currentProduct, 1, 1, currentProduct.productPrice)
            cartApiService.addItemToCart(item)
            cartApiService.addProductToCart(product)
            */
-        if (shoppingCart.items.isEmpty()){
-            var cartItem: Item = Item(1, product, 1, 1, product.productPrice)
-            shoppingCart.items.add(cartItem)
-            Log.println(Log.INFO, TAG, "Product added to empty cart" + product.productName)
-            return
-        }
-        for (item in shoppingCart.items) {
-            if (item.product?.productID == product.productID) {
-                item.quantity++
-                Log.println(Log.INFO, TAG, "Product increase" + product.productName)
-                return
-            } else {
-                var cartItem: Item = Item(2, product, 1, 1, product.productPrice)
-                shoppingCart.items.add(cartItem)
-                Log.println(Log.INFO, TAG, "Product added to cart" + product.productName)
-                return
+            var itemExist:Boolean = false
+            for (item in shoppingCart.items!!) {
+                if (item.ItemID == product.ItemID) {
+                    Log.println(Log.INFO, TAG, "item  exist")
+                    item.quantity = item.quantity + 1
+                    shoppingCart.totalPrice = shoppingCart.totalPrice?.plus(product.ItemPrice)
+                    itemExist = true
+                    Log.println(Log.INFO, TAG, "Product increase")
+                    break
+                }
             }
-        }
+            if(itemExist == false){
+                Log.println(Log.INFO, TAG, "item not exist")
+                shoppingCart.items!!.add(product)
+                shoppingCart.totalPrice = shoppingCart.totalPrice?.plus(product.ItemPrice)
+            }
     }
     override fun getItemCount(): Int {
         return products.size
@@ -101,7 +98,7 @@ class ProductAdapter(var products:ArrayList<Product>):RecyclerView.Adapter<Produ
         var cardView: View = view.findViewById(com.example.shoppingcart.R.id.cardViewProduct)
     }
 
-    fun updateProductList(newProductList: List<Product>) {
+    fun updateProductList(newProductList: List<Item>) {
         products.clear()
         products.addAll(newProductList)
         notifyDataSetChanged()

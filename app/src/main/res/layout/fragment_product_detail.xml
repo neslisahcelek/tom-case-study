@@ -57,7 +57,7 @@
                 android:layout_gravity="center"
                 android:text="Product Description"
                 android:textAlignment="center"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/buttonAddtoCart"

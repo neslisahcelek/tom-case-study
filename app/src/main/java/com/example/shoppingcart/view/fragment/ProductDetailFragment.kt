@@ -79,6 +79,25 @@ class ProductDetailFragment: Fragment() {
 
         return binding.root
     }
+    fun addToCart(product: Item) { //add product to shopping cart
+        var shoppingCart = MockData.MockCart.cart
+        var itemExist:Boolean = false
+        for (item in shoppingCart.items!!) {
+            if (item.ItemID == product.ItemID) {
+                Log.println(Log.INFO, ContentValues.TAG, "item  exist")
+                item.quantity = item.quantity + 1
+                shoppingCart.totalPrice = shoppingCart.totalPrice?.plus(product.ItemPrice)
+                itemExist = true
+                Log.println(Log.INFO, ContentValues.TAG, "Product increase")
+                break
+            }
+        }
+        if(itemExist == false){
+            Log.println(Log.INFO, ContentValues.TAG, "item not exist")
+            shoppingCart.items!!.add(product)
+            shoppingCart.totalPrice = shoppingCart.totalPrice?.plus(product.ItemPrice)
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel= ViewModelProvider(this).get(ProductDetailViewModel::class.java)
@@ -104,26 +123,6 @@ class ProductDetailFragment: Fragment() {
                 binding.textViewDetailProductName.text = product.ItemName
                 binding.textViewDetailProductPrice.text = product.ItemPrice.toString()
                 binding.textViewDetailProductDescription.text = product.ItemDescription
-            }
-        }
-    }
-
-    fun addToCart(product: Item) { //add product to shopping cart
-        var shoppingCart = MockData.MockCart.cart
-        if (shoppingCart.items?.isEmpty() == true){
-            shoppingCart.items!!.add(product)
-            Log.println(Log.INFO, ContentValues.TAG, "Product added to empty cart" )
-            return
-        }
-        for (item in shoppingCart.items!!) {
-            if (item.ItemID == product.ItemID) {
-                product.quantity++
-                Log.println(Log.INFO, ContentValues.TAG, "Product increase" )
-                return
-            } else {
-                shoppingCart.items!!.add(product)
-                Log.println(Log.INFO, ContentValues.TAG, "Product added to cart" )
-                return
             }
         }
     }
