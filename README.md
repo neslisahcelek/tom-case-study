@@ -29,6 +29,10 @@ by- Product details: Users can view detailed information about each product, inc
 
 ## Recording
 
+![Shopping Cart Recording](https://github.com/neslisahcelek/TOM-Case-Study/assets/70594682/267de2ca-4c26-4e6d-a8de-76b6c0ba2173)
+
+
+
 
 
 
